@@ -1,0 +1,20 @@
+import Link from "next/link";
+
+export default function Footer() {
+  return (
+    <footer className="border-t mt-16 py-6">
+        <div className="container mx-auto text-center space-y-4 py-7 px-4 md:px-6 lg:px-8">
+
+      <p className="text-center text-sm text-gray-500">
+        © 2026 FoodNest | All rights reserved | Developed By DotSkillBD
+      </p>
+
+ 
+      <ul className="flex items-center gap-4 justify-center text-sm">
+        <li><Link href="/privacy">Privacy Policy</Link></li>
+        <li><Link href="/terms">Terms & Condition</Link></li>
+      </ul>
+        </div>
+    </footer>
+  );
+}
