@@ -58,6 +58,8 @@ export default function MyOrdersPage() {
   const orders = data?.data || [];
   const meta = data?.meta;
 
+console.log(orders)
+
   const handleStatusChange = (value: string) => {
     setStatusFilter(value === "all" ? "" : value);
     setPage(1);
