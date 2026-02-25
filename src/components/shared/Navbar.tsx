@@ -69,7 +69,7 @@ export default function Navbar() {
                         {/* Desktop Address */}
                         <div className="hidden lg:flex items-center gap-2 flex-1 max-w-md mx-8 text-gray-900">
                             <MapPin className="w-5 h-5 shrink-0" />
-                            <span className="text-sm truncate">Via Decio Filipponi, 1, 00136 Roma RM, Italy</span>
+                            <span className="text-sm truncate">Via carlo Marchesetti 21/2A, 34142, Trieste, Italia</span>
                         </div>
 
                         {/* Mobile & Desktop Cart Icon */}
@@ -119,7 +119,7 @@ export default function Navbar() {
                     {/* Mobile Address */}
                     <div className="lg:hidden flex items-center justify-center gap-2 pb-3 text-gray-900 text-sm">
                         <MapPin className="w-4 h-4 shrink-0" />
-                        <span className="truncate">Via Decio Filipponi, 1, 00136 Roma RM, Italy</span>
+                        <span className="truncate">Via carlo Marchesetti 21/2A, 34142, Trieste, Italia</span>
                     </div>
                 </div>
             </nav >
