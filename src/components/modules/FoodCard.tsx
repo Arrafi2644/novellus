@@ -74,8 +74,8 @@ export default function FoodCard({ food }: FoodCardProps) {
             </span>
 
             {displayOfferPrice !== undefined && displayOfferPrice < displayPrice && (
-              <span className="text-sm text-gray-500 line-through">
-                ৳{displayPrice.toFixed(2)}
+              <span className="text-sm text-gray-500 line-through ">
+                €{displayPrice.toFixed(2)}
               </span>
             )}
           </div>

@@ -361,7 +361,7 @@ export default function CreateFoodForm() {
                       name={`variants.${index}.price`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Price (৳) *</FormLabel>
+                          <FormLabel>Price *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -381,7 +381,7 @@ export default function CreateFoodForm() {
                       name={`variants.${index}.offerPrice`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Offer Price (৳)</FormLabel>
+                          <FormLabel>Offer Price </FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -531,7 +531,7 @@ export default function CreateFoodForm() {
                               <span>{ing.name}</span>
                               {ing.price && (
                                 <span className="text-sm text-muted-foreground">
-                                  ৳{ing.price.toFixed(2)}
+                                  {ing.price.toFixed(2)}
                                 </span>
                               )}
                             </div>
@@ -556,7 +556,7 @@ export default function CreateFoodForm() {
                       >
                         {ingredient.name}
                         {ingredient.price && (
-                          <span className="text-xs opacity-70">৳{ingredient.price}</span>
+                          <span className="text-xs opacity-70">{ingredient.price}</span>
                         )}
                         <button
                           type="button"
