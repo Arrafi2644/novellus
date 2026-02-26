@@ -95,7 +95,7 @@ export function LoginForm({ isOpen, onClose, onSwitchToSignup }: LoginFormProps)
                     {/* Title */}
                     <DialogTitle className="text-2xl font-bold text-gray-800">Welcome back</DialogTitle>
                     <DialogDescription className="text-gray-800 font-medium">
-                        Log in to continue to FoodNest
+                        Log in to continue to Pizzerianovellus
                     </DialogDescription>
                 </DialogHeader>
 

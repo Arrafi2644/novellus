@@ -6,9 +6,8 @@ export default function Footer() {
         <div className="container mx-auto text-center space-y-4 py-7 px-4 md:px-6 lg:px-8">
 
       <p className="text-center text-sm text-gray-500">
-        © 2026 FoodNest | All rights reserved | Developed By DotSkillBD
+        © 2026 Pizzerianovellus | All rights reserved | Developed By <a className="hover:underline hover:text-[#EF4823]" href="https://dotskillsbd.com" target="_blank">DotSkills</a>
       </p>
-
  
       <ul className="flex items-center gap-4 justify-center text-sm">
         <li><Link href="/privacy">Privacy Policy</Link></li>
