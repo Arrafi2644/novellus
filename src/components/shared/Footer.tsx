@@ -10,8 +10,8 @@ export default function Footer() {
       </p>
  
       <ul className="flex items-center gap-4 justify-center text-sm">
-        <li><Link href="/privacy">Privacy Policy</Link></li>
-        <li><Link href="/terms">Terms & Condition</Link></li>
+        <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+        <li><Link href="/terms-condition">Terms & Condition</Link></li>
       </ul>
         </div>
     </footer>

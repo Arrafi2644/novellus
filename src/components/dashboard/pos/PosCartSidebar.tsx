@@ -229,9 +229,9 @@ export default function PosCartSidebar() {
 
 
   return (
-    <div className="w-full sticky top-36 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
+    <div className="w-full sticky top-36 h-[calc(100vh-9rem)]  overflow-y-auto bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
       {/* Cart Items */}
-      <div className="flex-1 p-5 overflow-y-auto">
+      <div className="p-5 ">
         <h3 className="text-xl font-bold mb-5">Cart ({cart.length})</h3>
 
         {cart.length === 0 ? (

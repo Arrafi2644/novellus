@@ -1,41 +1,3 @@
-// "use client"
-// import PosMainSection from '@/components/dashboard/pos/PosMainSection'
-// import PosToolbar from '@/components/dashboard/pos/PosToolbar';
-// import TablePagination from '@/components/shared/TablePagination';
-// import { useGetAllFoodsQuery } from '@/redux/features/food/food.api';
-// import React from 'react';
-
-// export default function PosPage() {
-//   // const { data, isLoading, isError } = useGetAllFoodsQuery({});
-//   const [searchTerm, setSearchTerm] = React.useState("");
-//   const [sort, setSort] = React.useState("");
-//   const [page, setPage] = React.useState(1);
-//   const limit = 10;
-
-//   const { data, isLoading, isError } = useGetAllFoodsQuery({
-//     ...(searchTerm && { searchTerm }),
-//     ...(sort && { sort }),
-//     page,
-//     limit,
-//   });
-
-//   return (
-//     <>
-
-//       <PosToolbar />
-
-//       <PosMainSection foods={data?.data} />
-
-//       {/* Pagination */}
-//       <TablePagination
-//         currentPage={page}
-//         totalPages={data?.meta?.totalPage ?? 1}
-//         onPageChange={setPage}
-//       />
-//     </>
-//   )
-// }
-
 
 "use client";
 
@@ -59,6 +21,7 @@ export default function PosPage() {
     searchTerm: searchTerm || undefined,
     sort: sort || undefined,
     category: category || undefined,
+    status: "ACTIVE",
     page,
     limit,
   });

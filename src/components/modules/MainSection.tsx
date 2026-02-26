@@ -12,7 +12,7 @@ export enum CategoryStatus {
 
 export default async function MainSection() {
   const categoriesRes = await serverFetch.get("/category/all-categories?limit=300")
-  const foodsRes = await serverFetch.get("/food/all-foods?limit=500")
+  const foodsRes = await serverFetch.get("/food/all-foods?limit=500&status=ACTIVE")
 
   const categoriesData = await categoriesRes.json()
   const foodsData = await foodsRes.json()

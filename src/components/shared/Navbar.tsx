@@ -9,6 +9,7 @@ import { getCart } from '@/utils/cart-helper';
 import AllCarts from '../modules/AllCarts';
 import { NavbarDropdown } from '../modules/NavbarDropdown';
 import { useUser } from '@/context/UserContext';
+import Link from 'next/link';
 
 export default function Navbar() {
     const { user, logout } = useUser();
@@ -44,27 +45,29 @@ export default function Navbar() {
                     <div className="flex items-center justify-between h-26 font-medium lg:h-26 relative">
 
 
-                      <div className='lg:hidden'>
-                          {
-                            user ?
-                                <NavbarDropdown user={user} onLogout={logout} />
-                                :
-                                < button
-                                    className=" p-2 border-2 rounded-full cursor-pointer transition-all duration-300 hover:scale-105 hover:bg-pink-500"
-                                    onClick={() => setIsLoginOpen(true)}
-                                >
-                                    <User className="w-6 h-6 text-gray-900" />
-                                </button>
-                        }
-                      </div>
-                        <Image
-                            src={logo}
-                            alt='logo'
-                            height={80}
-                            width={120}
-                            className='object-cover'
+                        <div className='lg:hidden'>
+                            {
+                                user ?
+                                    <NavbarDropdown user={user} onLogout={logout} />
+                                    :
+                                    < button
+                                        className=" p-2 border-2 rounded-full cursor-pointer transition-all duration-300 hover:scale-105 hover:bg-pink-500"
+                                        onClick={() => setIsLoginOpen(true)}
+                                    >
+                                        <User className="w-6 h-6 text-gray-900" />
+                                    </button>
+                            }
+                        </div>
+                        <Link href="/">
+                            <Image
+                                src={logo}
+                                alt='logo'
+                                height={80}
+                                width={120}
+                                className='object-cover'
 
-                        />
+                            />
+                        </Link>
 
                         {/* Desktop Address */}
                         <div className="hidden lg:flex items-center gap-2 flex-1 max-w-md mx-8 text-gray-900">

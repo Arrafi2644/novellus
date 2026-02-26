@@ -27,6 +27,7 @@ export default function OrderDetailsModal({
   isDetailsLoading,
   selectedOrderId,
 }: OrderDetailsModalProps) {
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
@@ -53,6 +54,7 @@ export default function OrderDetailsModal({
                   <p><strong>Type:</strong> {orderDetails.data.orderType}</p>
                   <p><strong>Delivery:</strong> {orderDetails.data.deliveryOption}</p>
                   <p><strong>Date:</strong> {format(new Date(orderDetails.data.createdAt!), "dd MMM yyyy, hh:mm a")}</p>
+                  <p><strong>Invoice:</strong> <a target="_blank" href={orderDetails?.data?.payment?.invoiceUrl}>Check Invoice</a></p>
                 </div>
               </div>
 
