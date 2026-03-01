@@ -89,7 +89,7 @@ export default function SearchInput({ foods, onSearch }: SearchInputProps) {
 
   return (
     <div ref={containerRef} className="relative w-full lg:w-80 shrink-0">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-pink-500 pointer-events-none" />
       <Input
         ref={inputRef}
         value={searchTerm}

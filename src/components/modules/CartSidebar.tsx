@@ -98,7 +98,7 @@ export default function CartSidebar() {
         >
           Delivery
           <span className="block text-xs mt-0.5">
-            {subtotal < 7 ? "Minimum 7€ required" : "15 - 25 mins"}
+            {subtotal < 7 ? "Minimum 7€ required" : "30 - 45 mins"}
           </span>
         </button>
 
@@ -111,7 +111,7 @@ export default function CartSidebar() {
             }`}
         >
           Pick-up
-          <span className="block text-xs text-gray-500 mt-0.5">10 - 25 mins</span>
+          <span className="block text-xs text-gray-500 mt-0.5">10 - 15 mins</span>
         </button>
       </div>
 
