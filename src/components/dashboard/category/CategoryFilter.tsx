@@ -19,13 +19,10 @@ interface CategoryFilterProps {
 export default function CategoryFilter({ onChange }: CategoryFilterProps) {
   const { data, isLoading } = useGetAllCategoriesQuery({});
 
-  console.log("categories ", data);
-
   const categories = data?.data || [];
 
-  // "All Categories" এর জন্য dummy value "all" ব্যবহার করা হচ্ছে
   const allCategories = [
-    { _id: "all", title: "All Categories" }, // ← এখানে _id: "all" (খালি নয়)
+    { _id: "all", title: "All Categories" },
     ...categories,
   ];
 
@@ -36,7 +33,6 @@ export default function CategoryFilter({ onChange }: CategoryFilterProps) {
   return (
     <Select
       onValueChange={(value) => {
-        // "all" হলে parent-কে খালি স্ট্রিং পাঠাও (backend-এ category না পাঠানোর জন্য)
         onChange?.(value === "all" ? "" : value);
       }}
     >
@@ -47,7 +43,7 @@ export default function CategoryFilter({ onChange }: CategoryFilterProps) {
       <SelectContent>
         {allCategories.map((cat) => (
           <SelectItem key={cat._id} value={cat._id}>
-            {cat.title}   {/* তোমার data-তে title আছে, name নয় */}
+            {cat.title} 
           </SelectItem>
         ))}
       </SelectContent>
