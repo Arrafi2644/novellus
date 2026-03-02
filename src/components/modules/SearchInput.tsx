@@ -44,8 +44,8 @@ export default function SearchInput({ foods, onSearch }: SearchInputProps) {
       (food) =>
         food.name.toLowerCase().includes(lowerTerm) ||
         food.description?.toLowerCase().includes(lowerTerm) ||
-        (typeof food.category.title === "string" &&
-          food.category.title.toLowerCase().includes(lowerTerm))
+        (typeof food?.category?.title === "string" &&
+          food?.category?.title.toLowerCase().includes(lowerTerm))
     );
 
     setSuggestions(matched.slice(0, 10));
@@ -97,15 +97,7 @@ export default function SearchInput({ foods, onSearch }: SearchInputProps) {
         onFocus={() => setShowSuggestions(searchTerm.trim().length > 0)}
         placeholder="Search food name..."
         // className="pl-9 pr-10 bg-gray-50"
-className="
-  pl-9 pr-10
-  bg-white
-  border-2 border-pink-400
-  shadow-md
-  rounded-md
-  hover:shadow-lg
-  focus:ring-2 focus:ring-pink-300 
-  transition-all duration-300
+        className=" pl-9 pr-10 bg-white border-2 border-pink-400 shadow-md rounded-md hover:shadow-lg focus:ring-2 focus:ring-pink-300  transition-all duration-300
 "
       />
 
@@ -141,11 +133,11 @@ className="
               </div>
 
               <div className="flex-1 min-w-0">
-                <div className="font-medium truncate">{food.name}</div>
+                <div className="font-medium truncate">{food?.name}</div>
                 <div className="text-sm text-gray-500 truncate">
-                  {typeof food.category === "string"
-                    ? food.category
-                    : food.category?.title || "Unknown"}
+                  {typeof food?.category === "string"
+                    ? food?.category
+                    : food?.category?.title || "Unknown"}
                 </div>
               </div>
             </div>

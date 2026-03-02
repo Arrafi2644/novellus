@@ -89,12 +89,34 @@
 //                 foods: cart.map((item: any) => ({
 //                     food: item.id,
 //                     quantity: item.quantity,
-//                     ingredients:
-//                         item.ingredients?.map((ing: any) => ({
-//                             name: ing.name,
-//                             price: ing.price,
-//                         })) || [],
+
+//                     ingredients: item.defaultIngredients?.map((ing: any) => ({
+//                         ingredient: ing._id,
+//                         name: ing.name,
+//                         price: ing.price,
+//                     })) || [],
+
+//                     extraIngredients: item.extraIngredients?.map((ing: any) => ({
+//                         ingredient: ing._id,
+//                         name: ing.name,
+//                         price: ing.price,
+//                     })) || [],
+
+//                     extrasTotal: item.extrasTotal || 0,
+//                     unitPrice: item.price,
+//                     totalPrice:(item.price + (item.extrasTotal || 0)) * item.quantity,
+//                     variant: item.selectedSize || null,
 //                 })),
+
+//                 // foods: cart.map((item) => ({
+//                 //     food: item.id,
+//                 //     quantity: item.quantity,
+//                 //     variant: item.selectedSize || null,
+//                 //     ingredients: [
+//                 //         ...(item.defaultIngredients?.map((ing) => ({ name: ing.name, price: ing.price })) || []),
+//                 //         ...(item.extraIngredients?.map((ing) => ({ name: ing.name, price: ing.price })) || []),
+//                 //     ],
+//                 // })),
 //                 customerInfo: {
 //                     name: data.fullname,
 //                     email: data.email,
@@ -122,7 +144,7 @@
 
 //             if (result?.success && result?.data?.order?._id) {
 //                 toast.success("Order created successfully!");
-//                 if(result.data?.order?.payment?.paymentMethod === 'COD'){
+//                 if (result.data?.order?.payment?.paymentMethod === 'COD') {
 //                     setCheckout(false);
 //                 }
 //                 // Stripe case
@@ -301,7 +323,6 @@
 //     );
 // }
 
-// ----------------------------------------------------------------------------------------
 
 "use client";
 
@@ -322,6 +343,7 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { clearCart, getCart } from "@/utils/cart-helper";
+import OrderCompleteDialog from "../modules/OrderCompleteDialog";
 
 // Enums
 export enum PaymentMethod {
@@ -350,12 +372,19 @@ const checkoutSchema = z.object({
 
 type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 
+// type CheckoutFormProps = {
+//     deliveryOption: DeliveryOption;
+//     setCheckout: (value: boolean) => void; // <-- receive setCheckout
+// };
+
 type CheckoutFormProps = {
     deliveryOption: DeliveryOption;
-    setCheckout: (value: boolean) => void; // <-- receive setCheckout
+    setCheckout: (value: boolean) => void;
+    setOrderSuccess: (value: boolean) => void;
+    setOrder: (order: any) => void;
 };
 
-export function CheckoutForm({ deliveryOption, setCheckout }: CheckoutFormProps) {
+export function CheckoutForm({ deliveryOption, setCheckout, setOrder, setOrderSuccess }: CheckoutFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
 
@@ -408,7 +437,7 @@ export function CheckoutForm({ deliveryOption, setCheckout }: CheckoutFormProps)
 
                     extrasTotal: item.extrasTotal || 0,
                     unitPrice: item.price,
-                    totalPrice:(item.price + (item.extrasTotal || 0)) * item.quantity,
+                    totalPrice: (item.price + (item.extrasTotal || 0)) * item.quantity,
                     variant: item.selectedSize || null,
                 })),
 
@@ -447,24 +476,27 @@ export function CheckoutForm({ deliveryOption, setCheckout }: CheckoutFormProps)
             }
 
             if (result?.success && result?.data?.order?._id) {
-                toast.success("Order created successfully!");
-                if (result.data?.order?.payment?.paymentMethod === 'COD') {
-                    setCheckout(false);
-                }
-                // Stripe case
-                if (
-                    data.paymentMethod === PaymentMethod.STRIPE &&
-                    result.data.checkoutUrl
-                ) {
-                    setCheckoutUrl(result.data.checkoutUrl);
-                    toast.info("Ready to pay — click 'Pay Now'");
 
+                const createdOrder = result.data.order
+
+                if (createdOrder.payment?.paymentMethod === 'COD') {
+                    clearCart()
+                    setCheckout(false)
+                    form.reset()
                 }
-                // COD case
-                else if (data.paymentMethod === PaymentMethod.COD) {
-                    toast.success("Order placed with Cash on Delivery!");
-                    clearCart();
-                    form.reset(); // optional
+
+                if (createdOrder.payment?.paymentMethod === 'COD') {
+                    clearCart()
+
+                    setOrder(createdOrder)
+                    setCheckout(false)      // first close checkout
+                    setOrderSuccess(true)   // then open modal
+
+                    form.reset()
+                }
+
+                if (data.paymentMethod === PaymentMethod.STRIPE && result.data.checkoutUrl) {
+                    setCheckoutUrl(result.data.checkoutUrl)
                 }
             } else {
                 toast.error(result.message || "Something went wrong");
@@ -489,7 +521,7 @@ export function CheckoutForm({ deliveryOption, setCheckout }: CheckoutFormProps)
 
     const handleButtonClick = () => {
         if (checkoutUrl) {
-            clearCart();
+            // clearCart();
             setCheckout(false);
             window.open(checkoutUrl, "_blank");
         } else {
@@ -608,7 +640,6 @@ export function CheckoutForm({ deliveryOption, setCheckout }: CheckoutFormProps)
                 </form>
             </Form>
 
-            {/* একই জায়গায় ডাইনামিক বাটন */}
             <Button
                 onClick={handleButtonClick}
                 disabled={isLoading || !form.formState.isValid}
@@ -617,12 +648,15 @@ export function CheckoutForm({ deliveryOption, setCheckout }: CheckoutFormProps)
                 {buttonText}
             </Button>
 
-            {/* অপশনাল: payment complete message */}
             {checkoutUrl && (
                 <p className="text-center text-sm text-green-600 mt-2">
                     Order created! Click "Pay Now" to complete payment.
                 </p>
             )}
+
         </div>
+
+
     );
+
 }

@@ -23,8 +23,8 @@ export default function CategoryWiseFoodSection({
       (food) =>
         food.name.toLowerCase().includes(lowerTerm) ||
         food.description?.toLowerCase().includes(lowerTerm) ||
-        (typeof food.category.title === "string" &&
-          food.category.title.toLowerCase().includes(lowerTerm)),
+        (typeof food?.category?.title === "string" &&
+          food?.category?.title.toLowerCase().includes(lowerTerm)),
     );
   }, [foods, searchTerm]);
 

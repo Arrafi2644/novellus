@@ -16,7 +16,7 @@ export default async function CommonLayout({ children }: { children: React.React
     return (
         <div>
             <UserProvider>
-                <FoodProvider foods={foodsData?.data} categories={categoriesData?.data}>
+                <FoodProvider foods={foodsData?.data || []} categories={categoriesData?.data || []}>
                     <AnnouncementBar />
                     <Navbar />
                     <main>

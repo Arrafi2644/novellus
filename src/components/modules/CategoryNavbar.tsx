@@ -66,7 +66,7 @@ export default function CategoryNavbar({
           )}
 
           <div ref={scrollRef} className="flex gap-2 flex-1 overflow-x-auto scrollbar-hide">
-            {categories.map((cat) => (
+            {categories?.map((cat) => (
               <Button
                 key={cat._id}
                 variant="ghost"

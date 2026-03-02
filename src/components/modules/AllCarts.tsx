@@ -24,6 +24,7 @@ import {
   DeliveryOption as DO,
 } from "../auth/CheckoutForm";
 import { motion, AnimatePresence } from "framer-motion";
+import OrderCompleteDialog from "./OrderCompleteDialog";
 
 /* 🔹 SAME cart shape as CartSidebar */
 interface CartItem {
@@ -57,6 +58,8 @@ export default function CartSheet({
 }: CartSheetProps) {
   const [delivery, setDelivery] = useState<DO>(DO.DELIVERY);
   const [checkout, setCheckout] = useState(false);
+  const [orderSuccess, setOrderSuccess] = useState(false)
+  const [order, setOrder] = useState<any>(null)
 
   /* ---------- TOTAL (same logic as CartSidebar) ---------- */
   const subtotal = cartItems.reduce((sum, item) => {
@@ -122,7 +125,7 @@ export default function CartSheet({
 
         {/* Delivery / Pickup */}
         <div className="flex border-b p-4 flex-none">
-          
+
           {/* <button
             onClick={() => setDelivery(DO.DELIVERY)}
             className={`flex-1 py-3.5 text-center font-medium ${
@@ -141,28 +144,28 @@ export default function CartSheet({
             disabled={subtotal < 7}
             onClick={() => setDelivery(DO.DELIVERY)}
             className={`flex-1 py-4 text-center font-medium transition-colors ${subtotal < 7
-                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : delivery === DO.DELIVERY
-                  ? "bg-pink-50 border-b-2 border-pink-500 text-pink-700"
-                  : "hover:bg-gray-50 text-gray-700"
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : delivery === DO.DELIVERY
+                ? "bg-pink-50 border-b-2 border-pink-500 text-pink-700"
+                : "hover:bg-gray-50 text-gray-700"
               }`}
           >
             Delivery
             <span className="block text-xs mt-0.5">
-              {subtotal < 7 ? "Minimum 7€ required" : "15 - 25 mins"}
+              {subtotal < 7 ? "Minimum 7€ required" : "30 - 45 mins"}
             </span>
           </button>
 
           <button
             onClick={() => setDelivery(DO.PICKUP)}
             className={`flex-1 py-3.5 text-center font-medium ${delivery === DO.PICKUP
-                ? "bg-white border-b-2 border-pink-600 text-pink-700"
-                : "bg-gray-50 text-gray-600"
+              ? "bg-white border-b-2 border-pink-600 text-pink-700"
+              : "bg-gray-50 text-gray-600"
               }`}
           >
             Pickup
             <span className="block text-xs text-gray-500 mt-0.5">
-              10–25 mins
+              10 - 15 mins
             </span>
           </button>
         </div>
@@ -291,6 +294,8 @@ export default function CartSheet({
                 <CheckoutForm
                   deliveryOption={delivery}
                   setCheckout={setCheckout}
+                  setOrderSuccess={setOrderSuccess}
+                  setOrder={setOrder}
                 />
               </motion.div>
             )}
@@ -316,6 +321,11 @@ export default function CartSheet({
           </div>
         )}
       </SheetContent>
+       <OrderCompleteDialog
+              open={orderSuccess}
+              onClose={() => setOrderSuccess(false)}
+              order={order}
+            />
     </Sheet>
   );
 }

@@ -93,11 +93,11 @@ export default function FoodDetailsDialog({ food, open, onOpenChange }: Props) {
       .map((name) => extraIngredients.find((i) => i.name === name))
       .filter(Boolean) as IIngredient[];
 
-    if (food.category.title === "Metro") return extras.length * 4;
-    if (food.category.title === "Novellus")
+    if (food?.category?.title === "Metro") return extras.length * 4;
+    if (food?.name === "NOVELLUS AG")
       return extras.length > 4 ? extras.slice(4).reduce((sum, i) => sum + i.price, 0) : 0;
     return extras.reduce((sum, i) => sum + i.price, 0);
-  }, [selectedExtras, extraIngredients, food.category.title]);
+  }, [selectedExtras, extraIngredients, food.category?.title]);
 
   const unitTotal = effectivePrice + extrasTotal;
   const grandTotal = unitTotal * quantity;
@@ -161,7 +161,7 @@ export default function FoodDetailsDialog({ food, open, onOpenChange }: Props) {
 
         <div className="p-6 space-y-6">
           <DialogHeader>
-            <DialogTitle className="text-2xl">{food.name}</DialogTitle>
+            <DialogTitle className="text-2xl">{food?.name}</DialogTitle>
             <DialogDescription>{food.description}</DialogDescription>
           </DialogHeader>
 
@@ -200,7 +200,7 @@ export default function FoodDetailsDialog({ food, open, onOpenChange }: Props) {
             <div className="flex flex-wrap gap-1">
               {food.ingredients.map((ing) => (
                 <button
-                disabled={food.category.title === "Novellus"}
+                disabled={food?.name === "NOVELLUS AG"}
                   key={ing.name}
                   onClick={() => toggleDefault(ing.name)}
                   className={`px-2 py-1 text-xs rounded-full border transition-colors ${
