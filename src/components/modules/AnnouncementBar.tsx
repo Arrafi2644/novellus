@@ -11,8 +11,7 @@ export default function AnnouncementBar() {
 
                 <Typewriter
                   words={[
-                    "20% Off On Your First Order",
-                    "Free Delivery Over 7€"
+                    "10% Off On Your First Order"
                   ]}
                   loop={0} // 0 = infinite
                   cursor

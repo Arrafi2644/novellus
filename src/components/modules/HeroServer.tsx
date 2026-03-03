@@ -15,11 +15,11 @@ import { Button } from '../ui/button'
         {/* Main Content Container */}
         <div className="container mx-auto overflow-hidden relative z-10 py-6">
           <div className='space-y-3' >
-            <h2 className='text-3xl lg:text-5xl font-bold text-gray-800'>Delicious Food, Delivered Fast</h2>
+            <h2 className='text-3xl lg:text-5xl font-bold text-gray-800'>Pizzeria e stuzzicheria da Asporto</h2>
   
             {/* Subheading */}
               <p className="text-lg sm:text-xl text-gray-800 font-medium mb-6 leading-relaxed max-w-2xl">
-               We simplify your dining experience so you can focus on the moments that matter. Since 2020.
+               Semplifichiamo la tua esperienza culinaria così puoi concentrarti sui momenti che contano.
               </p>
   
             {/* CTA Buttons */}
