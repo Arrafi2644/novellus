@@ -115,7 +115,7 @@ const FoodManagementPage = () => {
 
   return (
     <div>
-      <DashboardPageHeader title="Food Management" />
+      <DashboardPageHeader title="Foods" />
 
       {/* Toolbar */}
       <FoodToolbar

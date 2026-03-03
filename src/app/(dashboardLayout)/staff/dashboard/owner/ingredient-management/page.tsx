@@ -90,7 +90,7 @@ const IngredientManagementPage = () => {
 
   return (
     <div>
-      <DashboardPageHeader title="Ingredient Management" />
+      <DashboardPageHeader title="Ingredients" />
 
       <IngredientToolbar
         onSearchChange={setSearchTerm}

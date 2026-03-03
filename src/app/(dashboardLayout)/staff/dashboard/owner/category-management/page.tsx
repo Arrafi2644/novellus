@@ -98,7 +98,7 @@ const CategoryManagementPage = () => {
 
   return (
     <div>
-      <DashboardPageHeader title="Category Management" />
+      <DashboardPageHeader title="Categories" />
 
       <CategoryToolbar
         onSearchChange={setSearchTerm}

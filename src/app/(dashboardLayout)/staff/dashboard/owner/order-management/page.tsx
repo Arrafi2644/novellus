@@ -147,7 +147,7 @@ const { data, isLoading, isError, refetch } = useGetAllOrdersQuery({
 
   return (
     <div>
-      <DashboardPageHeader title="Order Management" />
+      <DashboardPageHeader title="Orders" />
 
       <OrderToolbar
         onSearchChange={setSearchTerm}
