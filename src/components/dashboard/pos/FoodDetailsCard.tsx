@@ -160,7 +160,7 @@ export default function CompactFoodCard({ food }: Props) {
                     <Euro size={12} className="inline" />
                     {(v.offerPrice ?? v.price).toFixed(2)}
                     {v.totalStock === 0 && (
-                      <span className="text-red-500 ml-1">(Out of Stock)</span>
+                      <span className="text-red-500 ml-1">(Stock Out)</span>
                     )}
                   </SelectItem>
                 ))}

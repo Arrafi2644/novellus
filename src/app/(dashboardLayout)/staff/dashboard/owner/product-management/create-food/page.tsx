@@ -381,7 +381,7 @@ export default function CreateFoodForm() {
                       name={`variants.${index}.offerPrice`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Offer Price </FormLabel>
+                          <FormLabel>Selling Price </FormLabel>
                           <FormControl>
                             <Input
                               type="number"

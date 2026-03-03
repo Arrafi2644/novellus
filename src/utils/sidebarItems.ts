@@ -13,7 +13,7 @@ export const sellerSidebar = [
 
 export const ownerSidebar = [
   {
-    title: "Owner Management",
+    title: "Owner Dashboard",
     items: [
       { title: "Dashboard", url: "/staff/dashboard", icon: LayoutDashboardIcon },
       { title: "Foods", url: "/staff/dashboard/owner/product-management", icon: ToolCase },
@@ -29,7 +29,7 @@ export const ownerSidebar = [
 
 export const userSidebar = [
   {
-    title: "Owner Management",
+    title: " Dashboard",
     items: [
       { title: "My Orders", url: "/customer/dashboard/my-orders", icon: ToolCase },
     ],

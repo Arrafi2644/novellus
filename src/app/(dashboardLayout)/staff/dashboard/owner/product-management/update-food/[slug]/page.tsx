@@ -853,14 +853,14 @@ export default function UpdateFoodForm() {
   const params = useParams();
   const slug = params.slug as string;
 
+  const { data: catData, isLoading: isCategoriesLoading } = useGetAllCategoriesQuery({});
+  const { data: ingData, isLoading: isIngredientsLoading } = useGetAllIngredientsQuery({});
   const { data: foodData, isLoading: isFoodLoading, isError: foodError } =
     useGetSingleFoodQuery(slug);
 
   const [updateFood, { isLoading: isUpdating }] = useUpdateFoodMutation();
 
-  const { data: catData, isLoading: isCategoriesLoading } = useGetAllCategoriesQuery({});
 
-  const { data: ingData, isLoading: isIngredientsLoading } = useGetAllIngredientsQuery({});
 
   const router = useRouter();
 
@@ -872,7 +872,7 @@ export default function UpdateFoodForm() {
     resolver: zodResolver(foodSchema),
     defaultValues: {
       name: "",
-      category: "",
+      category: food?.category?._id || "",
       description: "",
       image: undefined,
       status: FoodStatus.ACTIVE,
@@ -1032,6 +1032,7 @@ export default function UpdateFoodForm() {
                                   ? "No categories available"
                                   : "Select category"
                             }
+                            
                           />
                         </SelectTrigger>
                       </FormControl>
@@ -1152,7 +1153,7 @@ export default function UpdateFoodForm() {
                       name={`variants.${index}.offerPrice`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Offer Price *</FormLabel>
+                          <FormLabel>Selling Price *</FormLabel>
                           <FormControl>
                             <Input
                               type="number"

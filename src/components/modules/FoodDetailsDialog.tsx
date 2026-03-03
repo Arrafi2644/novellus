@@ -167,47 +167,52 @@ export default function FoodDetailsDialog({ food, open, onOpenChange }: Props) {
 
           <Separator />
 
-          {/* Size Selection */}
-          <div className="space-y-2">
-            <label className="font-medium">Select Size</label>
-            <Select
-              value={selectedVariantIndex.toString()}
-              onValueChange={(val) => setSelectedVariantIndex(Number(val))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Choose size" />
-              </SelectTrigger>
-              <SelectContent>
-                {food.variants.map((variant, index) => (
-                  <SelectItem key={index} value={index.toString()}>
-                    {variant.size} - €{variant.price.toFixed(2)}
-                    {variant.totalStock === 0 && (
-                      <span className="text-red-500 ml-2">(Out of Stock)</span>
-                    )}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="flex items-center justify-between gap-4">
+            {/* Size Selection */}
+            <div className="space-y-2">
+              <label className="font-medium">Select Size</label>
+              <Select
+                value={selectedVariantIndex.toString()}
+                onValueChange={(val) => setSelectedVariantIndex(Number(val))}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Choose size" />
+                </SelectTrigger>
+                <SelectContent>
+                  {food.variants.map((variant, index) => (
+                    <SelectItem key={index} value={index.toString()}>
+                      {variant.size} - €{variant?.offerPrice?.toFixed(2) || variant.price.toFixed(2)}
+                      {variant?.offerPrice !== undefined && variant?.offerPrice < variant.price && (
+                        <span className="text-sm text-gray-500 line-through ">
+                          €{variant.price.toFixed(2)}
+                        </span>
+                      )}
+                      {variant.totalStock === 0 && (
+                        <span className="text-red-500 ml-2">(Stock Out)</span>
+                      )}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Price */}
+            <p className="text-3xl font-bold flex items-center gap-1">
+              <Euro /> {unitTotal.toFixed(2)}
+            </p>
           </div>
-
-          {/* Price */}
-          <p className="text-3xl font-bold flex items-center gap-1">
-            <Euro /> {unitTotal.toFixed(2)}
-          </p>
-
           {/* Default Ingredients */}
           {food.ingredients && food.ingredients.length > 0 && (
             <div className="flex flex-wrap gap-1">
               {food.ingredients.map((ing) => (
                 <button
-                disabled={food?.name === "NOVELLUS AG"}
+                  disabled={food?.name === "NOVELLUS AG"}
                   key={ing.name}
                   onClick={() => toggleDefault(ing.name)}
-                  className={`px-2 py-1 text-xs rounded-full border transition-colors ${
-                    removedDefaults.has(ing.name)
-                      ? "bg-red-50 border-red-300 text-red-700 line-through"
-                      : "bg-gray-100 border-gray-300"
-                  }`}
+                  className={`px-2 py-1 text-xs rounded-full border transition-colors ${removedDefaults.has(ing.name)
+                    ? "bg-red-50 border-red-300 text-red-700 line-through"
+                    : "bg-gray-100 border-gray-300"
+                    }`}
                 >
                   {ing.name}
                 </button>
@@ -253,53 +258,53 @@ export default function FoodDetailsDialog({ food, open, onOpenChange }: Props) {
             </div>
           )} */}
 
-{extraIngredients.length > 0 && (
-  <div className="space-y-2">
-    <Button
-      variant="ghost"
-      size="sm"
-      className="w-full justify-between h-8 px-2 text-xs"
-      onClick={() => setShowExtras(!showExtras)}
-    >
-      Extra Ingredients {selectedExtras.size > 0 && `(+${selectedExtras.size})`}
-      <ChevronDown
-        className={`h-3.5 w-3.5 transition ${showExtras ? "rotate-180" : ""}`}
-      />
-    </Button>
+          {extraIngredients.length > 0 && (
+            <div className="space-y-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-between h-8 px-2 text-xs"
+                onClick={() => setShowExtras(!showExtras)}
+              >
+                Extra Ingredients {selectedExtras.size > 0 && `(+${selectedExtras.size})`}
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition ${showExtras ? "rotate-180" : ""}`}
+                />
+              </Button>
 
-    {showExtras && (
-      <div className="flex flex-col gap-1 mt-1.5 max-h-60 overflow-y-auto">
-        {extraIngredients.map((ing) => {
-          const isSelected = selectedExtras.has(ing.name);
-          const price =
-            food.category.title === "Metro" ? 4 : ing.price || 0;
+              {showExtras && (
+                <div className="flex flex-col gap-1 mt-1.5 max-h-60 overflow-y-auto">
+                  {extraIngredients.map((ing) => {
+                    const isSelected = selectedExtras.has(ing.name);
+                    const price =
+                      food.category.title === "Metro" ? 4 : ing.price || 0;
 
-          return (
-            <div
-              key={ing._id}
-              className="flex justify-between items-center border rounded px-2 py-1"
-            >
-              <span className="text-sm">{ing.name}</span>
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">
-                  +€{price.toFixed(2)}
-                </span>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="w-6 h-6 p-0"
-                  onClick={() => toggleExtra(ing.name)}
-                >
-                  {isSelected ? <Minus size={12} /> : <Plus size={12} />}
-                </Button>
-              </div>
+                    return (
+                      <div
+                        key={ing._id}
+                        className="flex justify-between items-center border rounded px-2 py-1"
+                      >
+                        <span className="text-sm">{ing.name}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium">
+                            +€{price.toFixed(2)}
+                          </span>
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            className="w-6 h-6 p-0"
+                            onClick={() => toggleExtra(ing.name)}
+                          >
+                            {isSelected ? <Minus size={12} /> : <Plus size={12} />}
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-          );
-        })}
-      </div>
-    )}
-  </div>
-)}
+          )}
 
 
 
