@@ -62,72 +62,120 @@
 // -----------------------------------------
 
 
+"use client";
+
 import React from "react";
-import CategoryAccordion from "./CategoryAccordion"; // Import your accordion component
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import FoodCard from "./FoodCard";
 import { ICategory, IFood } from "@/types";
+import Image from "next/image";
 
 type Props = {
   categories: ICategory[];
   foods: IFood[];
   searchTerm: string;
+  openIds: string[];              // shared state from parent
+  setOpenIds: (ids: string[]) => void;
 };
 
 export default function CategoryWiseFoodSection({
   categories,
   foods,
   searchTerm,
+  openIds,
+  setOpenIds,
 }: Props) {
-  // Search filter for all foods
+
   const filteredFoods = React.useMemo(() => {
     if (!searchTerm.trim()) return foods;
 
-    const lowerTerm = searchTerm.toLowerCase();
+    const lower = searchTerm.toLowerCase();
     return foods.filter(
       (food) =>
-        food.name.toLowerCase().includes(lowerTerm) ||
-        food.description?.toLowerCase().includes(lowerTerm) ||
-        (typeof food?.category?.title === "string" &&
-          food?.category?.title.toLowerCase().includes(lowerTerm)),
+        food.name.toLowerCase().includes(lower) ||
+        food.description?.toLowerCase().includes(lower)
     );
   }, [foods, searchTerm]);
 
-  // Popular foods (calculated from filteredFoods)
-  // const popularFoods = React.useMemo(() => {
-  //   return [...filteredFoods]
-  //     .sort((a, b) => (b.totalSell ?? 0) - (a.totalSell ?? 0))
-  //     .slice(0, 6);
-  // }, [filteredFoods]);
+  const searchOpenIds = React.useMemo(() => {
+    if (!searchTerm.trim()) return [];
 
-  const activeCategoryId = React.useMemo(() => {
-  if (!searchTerm.trim()) return undefined;
+    const ids = filteredFoods.map((f) =>
+      typeof f.category === "object"
+        ? f.category?._id
+        : f.category
+    );
 
-  const firstMatchedFood = filteredFoods[0];
-  if (!firstMatchedFood) return undefined;
+    return [...new Set(ids)];
+  }, [filteredFoods, searchTerm]);
 
-  return typeof firstMatchedFood.category === "object"
-    ? firstMatchedFood.category?._id
-    : firstMatchedFood.category;
-}, [filteredFoods, searchTerm]);
+  // const finalOpenIds = searchTerm.trim().length > 0 ? searchOpenIds : openIds;
+  React.useEffect(() => {
+  if (searchTerm.trim().length > 0) {
+    setOpenIds(searchOpenIds);
+  }
+}, [searchTerm, searchOpenIds, setOpenIds]);
 
   return (
-    <div className="space-y-8">
+    <Accordion
+      type="multiple"
+      value={openIds}
+      onValueChange={(val) => setOpenIds(val)}  // ✅ use parent state
+      className="space-y-6 overflow-hidden"
+    >
       {categories.map((category) => {
-        // Get foods for this category
         const categoryFoods = filteredFoods.filter((food) =>
-                typeof food.category === "object"
-                  ? food.category?._id === category._id
-                  : food.category === category._id,
-              );
+          typeof food.category === "object"
+            ? food.category?._id === category._id
+            : food.category === category._id
+        );
 
-        // Only render if there are foods (hide empty categories)
-        if (categoryFoods.length === 0) return null;
+        if (!categoryFoods.length) return null;
 
         return (
-          <div key={category._id} id={category._id}>
-            <CategoryAccordion category={category} foods={categoryFoods} activeCategoryId={activeCategoryId} />
-          </div>
+          <AccordionItem
+            key={category._id}
+            value={category._id}
+            id={category._id}
+            className="border border-pink-500 rounded-xl px-4 last:border-b bg-pink-50"
+          >
+            {/* <AccordionTrigger>
+              {category.title}
+            </AccordionTrigger> */}
+
+
+            <AccordionTrigger className="px-0 py-4 text-left hover:no-underline">
+              <div className="flex items-center justify-between gap-6 w-full ">
+                <div>
+                  <h4 className="text-lg font-semibold">{category.title}</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {category.description}
+                  </p>
+                </div>
+                <Image
+                  src={category.image}
+                  alt={category.title}
+                  height={80}
+                  width={80}
+                  className="rounded-lg object-cover"
+                />
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {categoryFoods.map((food) => (
+                  <FoodCard key={food._id} food={food} />
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
         );
       })}
-    </div>
+    </Accordion>
   );
 }

@@ -85,20 +85,22 @@ export default function FoodCard({ food }: FoodCardProps) {
           </p>
 
           <h4 className="font-medium">Ingredients</h4>
+
           <div className="flex flex-wrap gap-1.5">
             {ingredients.length > 0 ? (
               <div className="flex flex-wrap gap-2">
-                {ingredients.slice(0, 2).map((ing: any, i: number) => {
-                  const isLastVisible = i === 1 && ingredients.length > 2;
+                {ingredients.slice(0, 1).map((ing: any, i: number) => {
+                  const hasMore = ingredients.length > 1;
+
                   return (
                     <span
                       key={i}
-                      className="text-xs bg-pink-50 text-pink-700 px-2.5 py-1 rounded-full border border-pink-200"
+                      className="text-xs bg-pink-50 text-pink-700 px-2.5 py-1 rounded-full border border-pink-400"
                     >
                       {ing.name}
-                      {isLastVisible && (
-                        <span className="ml-1 text-gray-500">
-                          +{ingredients.length - 2}
+                      {hasMore && (
+                        <span className="ml-1 text-gray-pink500 text-xs">
+                          +{ingredients.length - 1}
                         </span>
                       )}
                     </span>
@@ -106,7 +108,9 @@ export default function FoodCard({ food }: FoodCardProps) {
                 })}
               </div>
             ) : (
-              <span className="text-xs text-gray-500">No ingredients available</span>
+              <span className="text-xs text-gray-500">
+                No ingredients available
+              </span>
             )}
           </div>
         </div>
