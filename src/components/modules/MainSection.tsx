@@ -105,16 +105,18 @@ export default function MainSection() {
   const [failedModalOpen, setFailedModalOpen] = useState(false)
   const [order, setOrder] = useState<any>(null)
 
-  const popular: ICategory = {
-    _id: "popular-foods1234",
-    title: "Popular",
-    slug: "popular",
-    description: "Most selling and trending foods",
-    image: "https://res.cloudinary.com/dog2ins5h/image/upload/v1769358386/5yc3j878m28-1769358383644-vegetarian-buddha-bowl-raw-vegetables-baked-potatoes-bowl-vegan-meal-healthy-detox-food-concept-webp.webp.webp",
-    status: CategoryStatus.ACTIVE
-  }
+  // const popular: ICategory = {
+  //   _id: "popular-foods1234",
+  //   title: "Popular",
+  //   slug: "popular",
+  //   showOrder: 100,
+  //   description: "Most selling and trending foods",
+  //   image: "https://res.cloudinary.com/dog2ins5h/image/upload/v1769358386/5yc3j878m28-1769358383644-vegetarian-buddha-bowl-raw-vegetables-baked-potatoes-bowl-vegan-meal-healthy-detox-food-concept-webp.webp.webp",
+  //   status: CategoryStatus.ACTIVE
+  // }
 
-  const showcaseCategories = [...(categories || []), popular]
+  // const showcaseCategories = [...(categories || []), popular]
+  const showcaseCategories = categories || []
 
   // -------------------------------
   // 🔹 Stripe / Payment Success Modal
@@ -152,12 +154,12 @@ export default function MainSection() {
 
   const handleModalClose = () => {
     setModalOpen(false)
-    router.replace("/") 
+    router.replace("/")
   }
 
-    const handleFailedModalClose = () => {
+  const handleFailedModalClose = () => {
     setFailedModalOpen(false)
-    router.replace("/") 
+    router.replace("/")
   }
 
   return (

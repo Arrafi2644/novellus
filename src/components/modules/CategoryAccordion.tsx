@@ -15,18 +15,24 @@ type Props = {
 };
 
 export default function CategoryAccordion({ category, foods }: Props) {
-  const popularFoods = [...foods]
-    .sort((a, b) => (b.totalSell ?? 0) - (a.totalSell ?? 0))
-    .slice(0, 6);
+  // const popularFoods = [...foods]
+  //   .sort((a, b) => (b.totalSell ?? 0) - (a.totalSell ?? 0))
+  //   .slice(0, 6);
 
-  const categoryFoods =
-    category.title === "Popular"
-      ? popularFoods
-      : foods.filter(
-        (food) =>
-          typeof food.category === "object" &&
-          food.category?._id === category._id
-      );
+  // const categoryFoods =
+  //   category.title === "Popular"
+  //     ? popularFoods
+  //     : foods.filter(
+  //       (food) =>
+  //         typeof food.category === "object" &&
+  //         food.category?._id === category._id
+  //     );
+
+  const categoryFoods = foods.filter(
+    (food) =>
+      typeof food.category === "object" &&
+      food.category?._id === category._id
+  );
 
   return (
     <Accordion type="single" collapsible className="w-full border border-pink-500 rounded-xl">

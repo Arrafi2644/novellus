@@ -95,6 +95,7 @@ export interface ICategory {
   description: string;
   image: string;
   status: CategoryStatus;
+  showOrder: number;
 }
 
 

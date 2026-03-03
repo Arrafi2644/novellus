@@ -29,24 +29,21 @@ export default function CategoryWiseFoodSection({
   }, [foods, searchTerm]);
 
   // Popular foods (calculated from filteredFoods)
-  const popularFoods = React.useMemo(() => {
-    return [...filteredFoods]
-      .sort((a, b) => (b.totalSell ?? 0) - (a.totalSell ?? 0))
-      .slice(0, 6);
-  }, [filteredFoods]);
+  // const popularFoods = React.useMemo(() => {
+  //   return [...filteredFoods]
+  //     .sort((a, b) => (b.totalSell ?? 0) - (a.totalSell ?? 0))
+  //     .slice(0, 6);
+  // }, [filteredFoods]);
 
   return (
     <div className="space-y-8">
       {categories.map((category) => {
         // Get foods for this category
-        const categoryFoods =
-          category.title === "Popular"
-            ? popularFoods
-            : filteredFoods.filter((food) =>
-                typeof food.category === "object"
-                  ? food.category?._id === category._id
-                  : food.category === category._id,
-              );
+        const categoryFoods = filteredFoods.filter((food) =>
+          typeof food.category === "object"
+            ? food.category?._id === category._id
+            : food.category === category._id,
+        );
 
         // Only render if there are foods (hide empty categories)
         if (categoryFoods.length === 0) return null;
