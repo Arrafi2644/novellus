@@ -144,8 +144,8 @@ function FileUpload({ value, onChange, accept = "image/*", label = "Upload Image
 export default function CreateFoodForm() {
   const [createFood, { isLoading: isCreating }] = useCreateFoodMutation();
   const { data: categoriesData, isLoading: isCategoriesLoading, isError: categoriesError } =
-    useGetAllCategoriesQuery({});
-  const { data: ingredientsData, isLoading: isIngredientsLoading } = useGetAllIngredientsQuery({limit:400});
+    useGetAllCategoriesQuery({limit:100});
+  const { data: ingredientsData, isLoading: isIngredientsLoading } = useGetAllIngredientsQuery({limit:200});
 
   const router = useRouter();
   const categories = categoriesData?.data || [];

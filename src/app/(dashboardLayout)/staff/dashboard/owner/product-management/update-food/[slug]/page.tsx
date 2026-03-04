@@ -853,8 +853,8 @@ export default function UpdateFoodForm() {
   const params = useParams();
   const slug = params.slug as string;
 
-  const { data: catData, isLoading: isCategoriesLoading } = useGetAllCategoriesQuery({});
-  const { data: ingData, isLoading: isIngredientsLoading } = useGetAllIngredientsQuery({});
+  const { data: catData, isLoading: isCategoriesLoading } = useGetAllCategoriesQuery({limit:100});
+  const { data: ingData, isLoading: isIngredientsLoading } = useGetAllIngredientsQuery({limit:200});
   const { data: foodData, isLoading: isFoodLoading, isError: foodError } =
     useGetSingleFoodQuery(slug);
 

@@ -4,9 +4,9 @@ export interface IIngredient {
 }
 
 export interface IVariant {
-  size: string;           
+  size: string;
   price: number;
-  offerPrice?: number;   
+  offerPrice?: number;
   totalStock: number;
 }
 
@@ -100,14 +100,14 @@ export interface ICategory {
 
 
 export enum FoodStatus {
-    ACTIVE = "ACTIVE",
-    INACTIVE = "INACTIVE",
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
 }
 
 
 export enum PaymentMethod {
-    COD = "COD",
-    STRIPE = "STRIPE",
+  COD = "COD",
+  STRIPE = "STRIPE",
 }
 
 export enum OrderType {
@@ -116,12 +116,12 @@ export enum OrderType {
 }
 
 export interface IOrderFoodInput {
-    food: string; // frontend sends string _id
-    quantity: number;
-    ingredients?: {
-        name: string;
-        price: number;
-    }[];
+  food: string; // frontend sends string _id
+  quantity: number;
+  ingredients?: {
+    name: string;
+    price: number;
+  }[];
 };
 
 export enum OrderStatus {
@@ -147,6 +147,9 @@ export interface IOrderFood {
   ingredients?: IOrderIngredient[];
   unitPrice: number;
   lineTotal: number;
+  // Pizza a Metro (Farcita)
+  selectedPizzas?: string[];
+  pizzaSlices?: number | null;
 }
 
 export interface IOrder {
@@ -206,14 +209,14 @@ export interface IOrderResponse {
 
 
 export interface IIngredient {
-    _id?: string;
-    name: string;
-    price: number;
+  _id?: string;
+  name: string;
+  price: number;
 }
 
 
 export interface IVariant {
-  size: string;       
+  size: string;
   price: number;
   offerPrice?: number;
   totalStock: number;

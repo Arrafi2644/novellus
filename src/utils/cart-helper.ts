@@ -334,6 +334,10 @@ export interface CartItem {
   }>;
 
   extrasTotal: number;
+  // Pizza a Metro (Farcita)
+  selectedPizzas?: string[];     
+  pizzaSlices?: number | null; 
+
 }
 
 const CART_KEY = "cart_items";

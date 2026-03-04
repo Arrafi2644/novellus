@@ -182,6 +182,8 @@ export default function PosCartSidebar() {
           unitPrice: item.price,
           totalPrice: (item.price + (item.extrasTotal || 0)) * item.quantity,
           variant: item.selectedSize || null,
+          selectedPizzas: item.selectedPizzas || [],
+          pizzaSlices: item.pizzaSlices ?? null,
         })),
 
         // foods: cart.map((item) => ({
