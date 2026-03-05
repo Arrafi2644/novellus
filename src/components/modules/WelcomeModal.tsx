@@ -37,7 +37,7 @@ export default function WelcomeMenuModal() {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="p-0 overflow-hidden max-w-md">
+            <DialogContent className="p-0 overflow-hidden w-[90%] max-w-md mx-auto rounded-xl">
                 {/* Background */}
                 <div className="relative h-100 w-full">
                     <Image
