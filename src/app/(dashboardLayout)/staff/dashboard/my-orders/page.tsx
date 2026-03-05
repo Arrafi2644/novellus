@@ -145,7 +145,7 @@ export default function MyOrdersPage() {
                 {orders.map((order) => (
                   <TableRow key={order._id} className="hover:bg-muted/50">
                     <TableCell className="font-medium">
-                      #{order._id.toString()}
+                      #{ order.customOrderId ?? order._id.toString()}
                     </TableCell>
                     <TableCell>
                       {format(new Date(order.createdAt!), "dd MMM yyyy")}
@@ -196,7 +196,7 @@ export default function MyOrdersPage() {
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="font-medium text-sm">
-                        Order #{order._id.toString().slice(-8)}
+                        Order #{ order.customOrderId ?? order._id.toString().slice(-8)}
                       </p>
                       <p className="text-xs text-muted-foreground">
                         {format(new Date(order.createdAt!), "dd MMM yyyy, hh:mm a")}

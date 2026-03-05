@@ -82,7 +82,7 @@ const { data, isLoading, isError, refetch } = useGetAllOrdersQuery({
     {
       accessorKey: "_id",
       header: "Order ID",
-      cell: ({ row }) => `#${row.original._id.toString()}`,
+      cell: ({ row }) => `#${row.original.customOrderId ?? row.original._id.toString()}`,
     },
     {
       accessorKey: "orderType",

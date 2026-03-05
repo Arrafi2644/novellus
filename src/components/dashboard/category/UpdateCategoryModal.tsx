@@ -355,9 +355,9 @@ export default function UpdateCategoryModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg px-6 py-4 rounded-2xl border-0 shadow-2xl">
+      <DialogContent className="sm:max-w-lg px-6 py-4 overflow-y-auto max-h-160 rounded-2xl border-0 shadow-2xl">
         <DialogHeader>
-          <DialogTitle>Category Details & Update</DialogTitle>
+          <DialogTitle className="text-center font-semibold text-lg">Category Details & Update</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
