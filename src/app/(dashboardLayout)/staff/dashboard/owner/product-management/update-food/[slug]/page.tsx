@@ -853,8 +853,8 @@ export default function UpdateFoodForm() {
   const params = useParams();
   const slug = params.slug as string;
 
-  const { data: catData, isLoading: isCategoriesLoading } = useGetAllCategoriesQuery({limit:100});
-  const { data: ingData, isLoading: isIngredientsLoading } = useGetAllIngredientsQuery({limit:200});
+  const { data: catData, isLoading: isCategoriesLoading } = useGetAllCategoriesQuery({ limit: 100 });
+  const { data: ingData, isLoading: isIngredientsLoading } = useGetAllIngredientsQuery({ limit: 200 });
   const { data: foodData, isLoading: isFoodLoading, isError: foodError } =
     useGetSingleFoodQuery(slug);
 
@@ -894,7 +894,7 @@ export default function UpdateFoodForm() {
 
   // Populate form when food data is loaded
   useEffect(() => {
-    if (food && categories.length > 0) {
+    if (food) {
       const selectedCategoryId =
         typeof food.category === "object" && food.category?._id
           ? food.category._id
@@ -908,11 +908,11 @@ export default function UpdateFoodForm() {
 
       const loadedVariants = food.variants?.length
         ? food.variants.map((v: any) => ({
-            size: v.size || "Normal",
-            price: v.price ?? 0,
-            offerPrice: v.offerPrice ?? 0,
-            totalStock: v.totalStock ?? 0,
-          }))
+          size: v.size || "Normal",
+          price: v.price ?? 0,
+          offerPrice: v.offerPrice ?? 0,
+          totalStock: v.totalStock ?? 0,
+        }))
         : [{ size: "Normal", price: 0, offerPrice: 0, totalStock: 0 }];
 
       form.reset({
@@ -1021,7 +1021,7 @@ export default function UpdateFoodForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Category *</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value ?? ""}>
+                    <Select key={field.value} onValueChange={field.onChange} value={field.value ?? ""} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue
@@ -1044,6 +1044,26 @@ export default function UpdateFoodForm() {
                         ))}
                       </SelectContent>
                     </Select>
+
+                    {/* <Select
+                      key={field.value}
+                      onValueChange={field.onChange}
+                      value={field.value || ""}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                      </FormControl>
+
+                      <SelectContent>
+                        {categories.map((cat: any) => (
+                          <SelectItem key={cat._id} value={cat._id}>
+                            {cat.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select> */}
                     <FormMessage />
                   </FormItem>
                 )}
