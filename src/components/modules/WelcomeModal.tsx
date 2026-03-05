@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import modalBg from "../../../public/assets/welcome-modal-bg.jpeg"
 import logo from "../../../public/assets/logo-112.png"
-import { X } from "lucide-react";
+import { Phone, X } from "lucide-react";
 
 export default function WelcomeMenuModal() {
     const [open, setOpen] = useState(false);
@@ -49,7 +49,7 @@ export default function WelcomeMenuModal() {
 
                     {/* Close Button */}
                     <DialogClose asChild>
-                        <button className="absolute top-4 right-4 z-20 bg-black/50 outline-0 text-orange-500 p-2 rounded-full hover:bg-black">
+                        <button className="absolute top-4 right-4 z-20 bg-black/50 outline-0 border-2 border-orange-500 text-orange-500 p-2 rounded-full hover:bg-black">
                             <X size={18} />
                         </button>
                     </DialogClose>
@@ -57,7 +57,16 @@ export default function WelcomeMenuModal() {
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-6">
                         {/* Logo */}
-                        <Image src={logo} alt="logo" width={140} height={140} className="mb-4" />
+                        {/* Ei logota visible hoccena... backeground er karone... ekhane ekta white bg diye dekhano jete pare... tobe shadow er moto kore dite hobe bg ta */}
+                        {/* <Image src={logo} alt="logo" width={140} height={140} className="mb-4" /> */}
+                        <div className="mb-4 p-2 h-30 w-30 flex items-center justify-center rounded-full bg-white shadow-[0_0_35px_rgba(255,255,255,0.7)]">
+                            <Image
+                                src={logo}
+                                alt="logo"
+                                width={110}
+                                height={110}
+                            />
+                        </div>
 
                         {/* Dialog Title */}
                         <DialogTitle className="text-white text-2xl font-bold mb-2">
@@ -68,11 +77,29 @@ export default function WelcomeMenuModal() {
                             Discover our delicious menu and enjoy the best pizza experience.
                         </p>
 
+                        <div className="flex gap-2 items-center mb-6 text-white text-sm">
+                            <Phone size={16} />
+                            <a
+                                href="tel:+393313833563"
+                                className="flex items-center gap-2 hover:text-orange-500 transition"
+                            >
+                                +39 331 3833563
+                            </a>
+
+                            <a
+                                href="tel:+393931848315"
+                                className="flex items-center gap-2 hover:text-orange-500 transition"
+                            >
+                                {/* <Phone size={16} /> */}
+                                +39 3931848315
+                            </a>
+                        </div>
+
                         <Button
                             onClick={handleDownload}
                             className="bg-orange-500 hover:bg-orange-600"
                         >
-                            Explore Our Menu
+                            Download Our Menu
                         </Button>
                     </div>
                 </div>

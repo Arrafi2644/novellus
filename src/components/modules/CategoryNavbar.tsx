@@ -144,7 +144,7 @@ export default function CategoryNavbar({
     { label: "Fritti", children: ["Fritti"] },
     {
       label: "Insalate",
-      children: ["Insalate", "Insalte Plus"],
+      children: ["Insalate", "Insalate Plus"],
     },
     { label: "Contorni", children: ["Contorni"] },
     { label: "Dolci", children: ["Dolci"] },
