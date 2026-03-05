@@ -33,7 +33,7 @@ export default function OrderDetailsModal({
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            Order Details #{selectedOrderId?.toString()}
+            Order Details #{orderDetails?.data?.customOrderId ?? orderDetails?.data?. _id}
           </DialogTitle>
         </DialogHeader>
 

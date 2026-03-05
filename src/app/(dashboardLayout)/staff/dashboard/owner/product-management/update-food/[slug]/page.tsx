@@ -1044,26 +1044,6 @@ export default function UpdateFoodForm() {
                         ))}
                       </SelectContent>
                     </Select>
-
-                    {/* <Select
-                      key={field.value}
-                      onValueChange={field.onChange}
-                      value={field.value || ""}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                      </FormControl>
-
-                      <SelectContent>
-                        {categories.map((cat: any) => (
-                          <SelectItem key={cat._id} value={cat._id}>
-                            {cat.title}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select> */}
                     <FormMessage />
                   </FormItem>
                 )}

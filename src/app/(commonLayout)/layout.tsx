@@ -8,7 +8,7 @@ import React from 'react'
 
 export default async function CommonLayout({ children }: { children: React.ReactNode }) {
     const categoriesRes = await serverFetch.get("/category/all-categories?limit=300")
-    const foodsRes = await serverFetch.get("/food/all-foods?limit=500&status=ACTIVE")
+    const foodsRes = await serverFetch.get("/food/all-foods?limit=500&status=ACTIVE&sort=createdAt")
 
     const categoriesData = await categoriesRes.json()
     const foodsData = await foodsRes.json()

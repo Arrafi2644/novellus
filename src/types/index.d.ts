@@ -154,7 +154,7 @@ export interface IOrderFood {
 
 export interface IOrder {
   _id?: Types.ObjectId;
-
+  customOrderId?: number;
   orderType: OrderType;
   user?: Types.ObjectId;
   seller?: Types.ObjectId;

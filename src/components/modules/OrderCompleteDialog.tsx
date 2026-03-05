@@ -41,8 +41,8 @@ export default function OrderCompleteDialog({
 
                     {/* Order ID */}
                     <div>
-                        <span className="font-semibold">Order ID:</span>{" "}
-                        {order._id}
+                        <span className="font-semibold">Order ID:</span>{"#"}
+                        {order.customOrderId ?? order.id}
                     </div>
 
                     {/* Foods List */}

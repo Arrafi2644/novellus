@@ -341,7 +341,7 @@ export default function Navbar() {
     const [isSignupOpen, setIsSignupOpen] = useState(false);
     const [cartItems, setCartItems] = useState(() => getCart());
     const [isCartOpen, setIsCartOpen] = useState(false);
-   console.log("foods in navbar ", foods)
+
     useEffect(() => {
         const handleCartUpdate = () => {
             setCartItems(getCart());
