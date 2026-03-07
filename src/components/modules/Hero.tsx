@@ -1,6 +1,8 @@
 
 import Image from 'next/image';
-import heroBg from "../../../public/assets/Gemini_Generated_Image_ysj4t3ysj4t3ysj4.webp" 
+// import heroBg from "../../../public/assets/Gemini_Generated_Image_ysj4t3ysj4t3ysj4.webp" 
+// import heroBg from "../../../public/assets/Pizza-banner.webp" 
+import heroBg from "../../../public/assets/Hero-bg.webp" 
 import { HeroServer } from './HeroServer';
 
 export default function Hero() {
