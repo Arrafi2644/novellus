@@ -70,7 +70,7 @@ export default function WelcomeMenuModal() {
 
                         {/* Dialog Title */}
                         <DialogTitle className="text-white text-2xl font-bold mb-2">
-                            Welcome to Our Restaurant
+                            Welcome to Pizzeria e stuzzicheria
                         </DialogTitle>
 
                         <p className="text-gray-200 text-sm mb-6">

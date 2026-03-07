@@ -109,6 +109,7 @@
 //   );
 // }
 
+// ---------------------------------------------------------------------------------------------
 
 "use client";
 
@@ -167,23 +168,50 @@ export default function CategoryNavbar({
     }).filter((item) => item.ids.length > 0);
   }, [categories]);
 
-  const handleClick = (item: any) => {
-    if (!item.ids.length) return;
+  // const handleClick = (item: any) => {
+  //   if (!item.ids.length) return;
 
-    setActive(item.label);
-    onCategoryClick(item.ids);
+  //   setActive(item.label);
+  //   onCategoryClick(item.ids);
 
-    const firstElement = document.getElementById(item.ids[0]);
-    if (firstElement) {
+  //   const firstElement = document.getElementById(item.ids[0]);
+  //   if (firstElement) {
+  //     const offset = window.innerWidth >= 1024 ? 180 : 260;
+  //     const y =
+  //       firstElement.getBoundingClientRect().top +
+  //       window.scrollY -
+  //       offset;
+
+  //     window.scrollTo({ top: y, behavior: "smooth" });
+  //   }
+  // };
+
+const handleClick = (item: any) => {
+  if (!item.ids.length) return;
+
+  setActive(item.label);
+  onCategoryClick(item.ids);
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const el = document.getElementById(item.ids[0]);
+
+      if (!el) return;
+
       const offset = window.innerWidth >= 1024 ? 180 : 260;
+
       const y =
-        firstElement.getBoundingClientRect().top +
+        el.getBoundingClientRect().top +
         window.scrollY -
         offset;
 
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
+      window.scrollTo({
+        top: y,
+        behavior: "smooth",
+      });
+    });
+  });
+};
 
   const checkOverflow = () => {
     if (!scrollRef.current) return;

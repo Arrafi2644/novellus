@@ -122,12 +122,19 @@ export default function CategoryWiseFoodSection({
 }, [searchTerm, searchOpenIds, setOpenIds]);
 
   return (
+    // <Accordion
+    //   type="multiple"
+    //   value={openIds}
+    //   onValueChange={(val) => setOpenIds(val)}  // ✅ use parent state
+    //   className="space-y-6 overflow-hidden"
+    // >
     <Accordion
-      type="multiple"
-      value={openIds}
-      onValueChange={(val) => setOpenIds(val)}  // ✅ use parent state
-      className="space-y-6 overflow-hidden"
-    >
+  type="multiple"
+  value={openIds}
+  onValueChange={(val) => setOpenIds(val)}
+  // className="space-y-6 overflow-hidden [&_[data-state=open]]:animate-none [&_[data-state=closed]]:animate-none"
+  className="space-y-6 overflow-hidden"
+>
       {categories.map((category) => {
         const categoryFoods = filteredFoods.filter((food) =>
           typeof food.category === "object"
@@ -142,7 +149,8 @@ export default function CategoryWiseFoodSection({
             key={category._id}
             value={category._id}
             id={category._id}
-            className="border border-pink-500 rounded-xl px-4 last:border-b bg-pink-50"
+            // className="border border-pink-500 rounded-xl px-4 last:border-b bg-pink-50  scroll-mt-52 lg:scroll-mt-40"
+            className="border border-pink-500 rounded-xl px-4 last:border-b bg-pink-50 scroll-mt-52"
           >
             {/* <AccordionTrigger>
               {category.title}
