@@ -326,7 +326,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -344,6 +344,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { clearCart, getCart } from "@/utils/cart-helper";
 import OrderCompleteDialog from "../modules/OrderCompleteDialog";
+import { useUser } from "@/context/UserContext";
+import { IUser } from "@/types";
 
 // Enums
 export enum PaymentMethod {
@@ -387,6 +389,23 @@ type CheckoutFormProps = {
 export function CheckoutForm({ deliveryOption, setCheckout, setOrder, setOrderSuccess }: CheckoutFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
+    const { user, logout } = useUser();
+    const [loggedInUser, setLoggedInUser] = useState({});
+
+    useEffect(() => {
+        if (user) {
+            const newUser = fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${user._id}`)
+                .then(res => res.json())
+                .then(data => {
+                    setLoggedInUser(data.data);
+                });
+        }
+    }, [user])
+
+    
+
+    console.log("user in checkout form ", user)
+    console.log("Loggedin user in checkout form ", loggedInUser)
 
     const form = useForm<CheckoutFormValues>({
         resolver: zodResolver(checkoutSchema),
@@ -400,6 +419,18 @@ export function CheckoutForm({ deliveryOption, setCheckout, setOrder, setOrderSu
         },
     });
 
+    useEffect(() => {
+    if (loggedInUser) {
+        form.reset({
+            fullname: (loggedInUser as IUser).name || "",
+            email: (loggedInUser as IUser).email || "",
+            phone: (loggedInUser as IUser).phone || "",
+            address: (loggedInUser as IUser).address || "",
+            paymentMethod: undefined,
+            deliveryOption,
+        });
+    }
+}, [loggedInUser, form, deliveryOption]);
     const selectedPaymentMethod = form.watch("paymentMethod");
 
     const onSubmit = async (data: CheckoutFormValues) => {
@@ -413,7 +444,6 @@ export function CheckoutForm({ deliveryOption, setCheckout, setOrder, setOrderSu
                 return;
             }
 
-            console.log("cart items ", cart)
 
             const orderPayload = {
                 orderType: "ONLINE",

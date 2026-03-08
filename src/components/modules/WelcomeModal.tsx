@@ -14,17 +14,26 @@ import logo from "../../../public/assets/logo-112.png"
 import { Phone, X } from "lucide-react";
 
 export default function WelcomeMenuModal() {
-    const [open, setOpen] = useState(false);
+const [open, setOpen] = useState(false);
 
-    useEffect(() => {
-        setOpen(true);
+useEffect(() => {
+  const hasSeenModal = sessionStorage.getItem("welcomeModalShown");
 
-        const timer = setTimeout(() => {
-            setOpen(false);
-        }, 10000);
+  if (!hasSeenModal) {
+    sessionStorage.setItem("welcomeModalShown", "true");
+    setOpen(true);
+  }
+}, []);
 
-        return () => clearTimeout(timer);
-    }, []);
+useEffect(() => {
+  if (!open) return;
+
+  const timer = setTimeout(() => {
+    setOpen(false);
+  }, 10000);
+
+  return () => clearTimeout(timer);
+}, [open]);
 
     const handleDownload = () => {
         const link = document.createElement("a");
@@ -49,8 +58,8 @@ export default function WelcomeMenuModal() {
 
                     {/* Close Button */}
                     <DialogClose asChild>
-                        <button className="absolute top-4 right-4 z-20 bg-black/50 outline-0 border-2 border-orange-500 text-orange-500 p-2 rounded-full hover:bg-black">
-                            <X size={18} />
+                        <button className="absolute top-4 right-4 z-20 bg-white outline-0 border-3 border-orange-500 text-orange-500 p-2 rounded-full hover:bg-black">
+                            <X size={18} strokeWidth={3}/>
                         </button>
                     </DialogClose>
 

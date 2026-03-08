@@ -149,7 +149,7 @@ console.log(orders)
                 {orders.map((order) => (
                   <TableRow key={order._id} className="hover:bg-muted/50">
                     <TableCell className="font-medium">
-                      #{order._id.toString()}
+                      #{order?.customOrderId ?? order._id.toString()}
                     </TableCell>
                     <TableCell>
                       {format(new Date(order.createdAt!), "dd MMM yyyy")}
@@ -200,7 +200,7 @@ console.log(orders)
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="font-medium text-sm">
-                        Order #{order._id.toString().slice(-8)}
+                        Order #{orderDetails?.data?.customOrderId ?? order._id.toString()}
                       </p>
                       <p className="text-xs text-muted-foreground">
                         {format(new Date(order.createdAt!), "dd MMM yyyy, hh:mm a")}
@@ -288,7 +288,7 @@ console.log(orders)
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              Order Details #{selectedOrderId?.toString()}
+              Order Details #{orderDetails?.data?.customOrderId ?? selectedOrderId?.toString()}
             </DialogTitle>
           </DialogHeader>
 

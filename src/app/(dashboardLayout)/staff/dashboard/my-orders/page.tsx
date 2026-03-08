@@ -284,7 +284,7 @@ export default function MyOrdersPage() {
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              Order Details #{selectedOrderId?.toString()}
+              Order Details #{orderDetails?.data?.customOrderId ?? selectedOrderId?.toString()}
             </DialogTitle>
           </DialogHeader>
 

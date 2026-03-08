@@ -357,6 +357,8 @@ export default function Navbar() {
 
     const cartCount = cartItems.length;
 
+    console.log("user in navbar ", user)
+
     return (
         <>
             <nav className="w-full bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">

@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 
 export const getCurrentUser = async () => {
-  const cookieStore = await cookies(); // ✅ await করা লাগবে
+  const cookieStore = await cookies(); 
   const accessToken = cookieStore.get("accessToken")?.value;
 
   if (!accessToken) return null;
