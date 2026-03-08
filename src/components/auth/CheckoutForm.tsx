@@ -734,20 +734,22 @@ export function CheckoutForm({ deliveryOption, setCheckout, setOrder, setOrderSu
     // const [loggedInUser, setLoggedInUser] = useState({});
     const [loggedInUser, setLoggedInUser] = useState<IUser | null>(null);
 
-    useEffect(() => {
-        if (user) {
-            const newUser = fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${user._id}`)
-                .then(res => res.json())
-                .then(data => {
-                    setLoggedInUser(data.data);
-                });
+  useEffect(() => {
+    const fetchUser = async () => {
+        if (!user?._id) return;
+
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${user._id}`);
+            const data = await res.json();
+            setLoggedInUser(data.data);
+        } catch (err) {
+            console.error("User fetch error:", err);
         }
-    }, [user])
+    };
 
+    fetchUser();
+}, [user?._id]);
     
-
-    console.log("user in checkout form ", user)
-    console.log("Loggedin user in checkout form ", loggedInUser)
 
     const form = useForm<CheckoutFormValues>({
         resolver: zodResolver(checkoutSchema),
@@ -761,18 +763,37 @@ export function CheckoutForm({ deliveryOption, setCheckout, setOrder, setOrderSu
         },
     });
 
-    useEffect(() => {
-    if (loggedInUser) {
-        form.reset({
-            fullname: (loggedInUser as IUser).name || "",
-            email: (loggedInUser as IUser).email || "",
-            phone: (loggedInUser as IUser).phone || "",
-            address: (loggedInUser as IUser).address || "",
-            paymentMethod: undefined,
-            deliveryOption,
-        });
-    }
-}, [loggedInUser, form, deliveryOption]);
+//     useEffect(() => {
+//     if (loggedInUser) {
+//         form.reset({
+//             fullname: (loggedInUser as IUser).name || "",
+//             email: (loggedInUser as IUser).email || "",
+//             phone: (loggedInUser as IUser).phone || "",
+//             address: (loggedInUser as IUser).address || "",
+//             paymentMethod: undefined,
+//             deliveryOption,
+//         });
+//     }
+// }, [loggedInUser, form, deliveryOption]);
+
+useEffect(() => {
+    if (!loggedInUser) return;
+
+    form.reset({
+        fullname: loggedInUser.name || "",
+        email: loggedInUser.email || "",
+        phone: loggedInUser.phone || "",
+        address: loggedInUser.address || "",
+        paymentMethod: undefined,
+        deliveryOption,
+    });
+}, [loggedInUser, deliveryOption, form]);
+
+
+console.log("user in checkout form ", user)
+console.log("Loggedin user in checkout form ", loggedInUser)
+console.log("API URL:", process.env.NEXT_PUBLIC_API_URL)
+
     const selectedPaymentMethod = form.watch("paymentMethod");
 
     const onSubmit = async (data: CheckoutFormValues) => {
