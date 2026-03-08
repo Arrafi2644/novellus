@@ -731,7 +731,8 @@ export function CheckoutForm({ deliveryOption, setCheckout, setOrder, setOrderSu
     const [isLoading, setIsLoading] = useState(false);
     const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
     const { user, logout } = useUser();
-    const [loggedInUser, setLoggedInUser] = useState({});
+    // const [loggedInUser, setLoggedInUser] = useState({});
+    const [loggedInUser, setLoggedInUser] = useState<IUser | null>(null);
 
     useEffect(() => {
         if (user) {
