@@ -107,7 +107,7 @@ export default function CartSheet({
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent
         side="right"
-        className="min-w-74 p-0 flex flex-col h-full [&>button]:hidden"
+        className="min-w-80 p-0 flex flex-col h-full [&>button]:hidden"
       >
         {/* Header */}
         <SheetHeader className="p-4 border-b flex-none">
@@ -180,7 +180,7 @@ export default function CartSheet({
             cartItems.map((item) => (
               <div key={item.id} className="mb-6">
                 <div className="flex gap-4">
-                  <div className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0">
+                  <div className="relative w-18 h-18 rounded-lg overflow-hidden shrink-0">
                     <Image
                       src={item.image || "/placeholder-food.jpg"}
                       alt={item.name}

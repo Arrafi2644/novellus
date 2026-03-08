@@ -239,7 +239,7 @@ const handleClick = (item: any) => {
     <div className="container mx-auto px-4 md:px-6 lg:px-8 sticky top-40 lg:top-24 z-30 bg-white">
       <div className="py-6 flex items-center gap-2">
         {showScrollBtn && (
-          <Button size="icon" className="border border-pink-500 bg-pink-50 hover:bg-pink-100 hover:text-pink-500" variant="ghost" onClick={() => scroll("left")}>
+          <Button size="icon" className="border cursor-pointer bg-pink-500 hover:bg-pink-400 hover:text-white transition-colors duration-300 border-pink-50 text-white" variant="ghost" onClick={() => scroll("left")}>
             <ChevronLeft />
           </Button>
         )}
@@ -253,9 +253,9 @@ const handleClick = (item: any) => {
               key={item.label}
               variant="ghost"
               onClick={() => handleClick(item)}
-              className={`whitespace-nowrap border border-pink-500 bg-pink-50 ${
+              className={`whitespace-nowrap border border-pink-500 bg-pink-50 hover:text-white hover:bg-pink-500 cursor-pointer transition-colors duration-300 ${
                 active === item.label
-                  ? "text-pink-600 border border-b-2 border-pink-600 bg-pink-100"
+                  ? "bg-pink-500 border border-pink-600 text-white"
                   : "text-gray-600"
               }`}
             >
@@ -265,7 +265,7 @@ const handleClick = (item: any) => {
         </div>
 
         {showScrollBtn && (
-          <Button size="icon" className="border border-pink-500 bg-pink-50 hover:bg-pink-100 hover:text-pink-500" variant="ghost" onClick={() => scroll("right")}>
+          <Button size="icon" className="border cursor-pointer bg-pink-500 hover:bg-pink-400 border-pink-50 text-white transition-colors duration-300 hover:text-white" variant="ghost" onClick={() => scroll("right")}>
             <ChevronRight />
           </Button>
         )}

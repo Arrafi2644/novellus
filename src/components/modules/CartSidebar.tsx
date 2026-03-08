@@ -348,7 +348,7 @@ export default function CartSidebar() {
   }, [subtotal]);
 
   return (
-    <div className="w-full sticky top-46 h-[calc(100vh-11.5rem)] overflow-y-auto bg-white rounded-xl border border-gray-200 shadow-sm">
+    <div className="w-full sticky top-46 h-[calc(100vh-11.5rem)] overflow-y-auto bg-white rounded-xl border border-pink-400 shadow-sm">
       {/* Delivery / Pickup Toggle */}
       <div className="flex border-b">
 

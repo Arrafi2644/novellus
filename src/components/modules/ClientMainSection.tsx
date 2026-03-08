@@ -108,7 +108,7 @@ export default function ClientMainSection({
         onCategoryClick={setOpenCategoryIds}
       />
 
-      <Separator className="shadow sticky top-62 lg:top-42 z-50" />
+      <Separator className="shadow sticky top-62 lg:top-42 z-30" />
 
       <div className="container mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-12 gap-6 mt-8">
         <div className="col-span-12 lg:col-span-8">

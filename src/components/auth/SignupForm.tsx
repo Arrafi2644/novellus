@@ -29,6 +29,7 @@ import { toast } from 'sonner'
 import { loginUser } from '@/utils/loginUser'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@/context/UserContext'
+import Link from 'next/link'
 
 
 const signupSchema = z.object({
@@ -255,13 +256,13 @@ export function SignupForm({ isOpen, onClose, onSwitchToLogin }: SignupFormProps
                                     <div className="space-y-1 leading-none">
                                         <FormLabel className="text-sm font-normal text-gray-600">
                                             I agree to the{' '}
-                                            <a href="#" className="text-[#FF2B85] hover:text-pink-600 font-medium">
+                                            <Link href="/terms-condition" className="text-[#FF2B85] hover:text-pink-600 font-medium">
                                                 Terms of Service
-                                            </a>{' '}
+                                            </Link>{' '}
                                             and{' '}
-                                            <a href="#" className="text-[#FF2B85] hover:text-pink-600 font-medium">
+                                            <Link href="/privacy-policy" className="text-[#FF2B85] hover:text-pink-600 font-medium">
                                                 Privacy Policy
-                                            </a>
+                                            </Link>
                                         </FormLabel>
                                         <FormMessage />
                                     </div>
@@ -280,7 +281,7 @@ export function SignupForm({ isOpen, onClose, onSwitchToLogin }: SignupFormProps
                 </Form>
 
                 {/* Login Link */}
-                <div className="mt-6 text-center">
+                <div className="mt-0 text-center">
                     <p className="text-gray-600">
                         Already have an account?{' '}
                         <button
