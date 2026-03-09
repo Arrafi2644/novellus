@@ -127,7 +127,7 @@ export default function FoodCard({ food }: FoodCardProps) {
 
       {/* Add Button */}
       <Button
-        onClick={ingredients.length < 1 ? handleQuickAdd : () => setOpen(true)}
+        onClick={ingredients.length < 1 && food.category.title !== "Pizza a Metro" ? handleQuickAdd : () => setOpen(true)}
         size="icon"
         className="absolute cursor-pointer right-6 bottom-6 rounded-full text-gray-800 hover:text-white bg-white hover:bg-pink-500 transition-all duration-300"
       >

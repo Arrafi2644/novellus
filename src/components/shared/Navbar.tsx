@@ -331,6 +331,7 @@ import { useUser } from '@/context/UserContext';
 import { useFood } from '@/context/FoodContext';   // ✅ Context import
 import Link from 'next/link';
 import SearchInput from '../modules/SearchInput';
+import { ForgotPasswordForm } from '../modules/ForgotPasswordForm';
 
 export default function Navbar() {
 
@@ -339,6 +340,7 @@ export default function Navbar() {
 
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isSignupOpen, setIsSignupOpen] = useState(false);
+    const [isForgotOpen, setIsForgotOpen] = useState(false);
     const [cartItems, setCartItems] = useState(() => getCart());
     const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -478,11 +480,17 @@ export default function Navbar() {
             </nav>
 
             {/* Modals */}
-            <LoginForm
-                isOpen={isLoginOpen}
-                onClose={() => setIsLoginOpen(false)}
-                onSwitchToSignup={() => setIsSignupOpen(true)}
-            />
+         <LoginForm
+    isOpen={isLoginOpen}
+    onClose={() => setIsLoginOpen(false)}
+    onSwitchToSignup={() => setIsSignupOpen(true)}
+    onSwitchToForgot={() => setIsForgotOpen(true)} // <-- pass here
+/>
+
+<ForgotPasswordForm
+    isOpen={isForgotOpen}
+    onClose={() => setIsForgotOpen(false)}
+/>
 
             <SignupForm
                 isOpen={isSignupOpen}
