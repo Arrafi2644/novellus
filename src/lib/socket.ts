@@ -1,0 +1,20 @@
+import { io, Socket } from "socket.io-client";
+
+let socket: Socket | null = null;
+
+export const getSocket = () => {
+  if (!socket) {
+    socket = io(process.env.NEXT_PUBLIC_API_SOCKET_URL!, {  // ✅ ঠিক variable
+      transports: ["websocket"],
+    });
+
+    socket.on("connect", () => {
+      console.log("✅ Socket connected, id:", socket?.id);
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("❌ Socket connection error:", err.message);
+    });
+  }
+  return socket;
+};

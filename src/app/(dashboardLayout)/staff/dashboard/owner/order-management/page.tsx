@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { toast } from "sonner";
 import {
@@ -23,6 +23,7 @@ import OrderDetailsModal from "@/components/dashboard/order/OrderDetailsModal";
 import UpdateOrderModal from "@/components/dashboard/order/UpdateOrderModal";
 import { IOrder } from "@/types";
 import { format } from "date-fns";
+import { getSocket } from "@/lib/socket";
 
 export enum OrderStatus {
   PENDING = "PENDING",
@@ -42,13 +43,13 @@ const OrderManagementPage = () => {
   const [page, setPage] = useState(1);
   const limit = 10;
 
-const { data, isLoading, isError, refetch } = useGetAllOrdersQuery({
-  ...(searchTerm && { searchTerm: searchTerm.trim() }),
-  ...(sort && { sort }),
-  ...(statusFilter && { status: statusFilter as OrderStatus }), // ← type assertion
-  page,
-  limit,
-});
+  const { data, isLoading, isError, refetch } = useGetAllOrdersQuery({
+    ...(searchTerm && { searchTerm: searchTerm.trim() }),
+    ...(sort && { sort }),
+    ...(statusFilter && { status: statusFilter as OrderStatus }), // ← type assertion
+    page,
+    limit,
+  });
 
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
 
@@ -62,6 +63,24 @@ const { data, isLoading, isError, refetch } = useGetAllOrdersQuery({
 
   const [orderToDelete, setOrderToDelete] = useState<IOrder | null>(null);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+
+useEffect(() => {
+  const socket = getSocket();
+
+  const handleNewOrder = (order: any) => {
+    const audio = new Audio("/sounds/notification.wav");
+    audio.play().catch((err) => console.log("Audio play error:", err));
+    toast.success("New order received!");
+
+    refetch();
+  };
+
+  socket.on("new-order", handleNewOrder);
+
+  return () => {
+    socket.off("new-order", handleNewOrder);
+  };
+}, [refetch]);
 
   // Delete / Cancel handler
   const handleDeleteOrder = async (order: IOrder) => {
