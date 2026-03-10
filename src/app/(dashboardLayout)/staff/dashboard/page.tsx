@@ -200,7 +200,7 @@ export default function Dashboard() {
                         return value;
                       }}
                     /> */}
-                    <Tooltip
+                    {/* <Tooltip
                       formatter={(value: number | undefined, name: string | undefined) => {
                         // Early return if either is missing/undefined
                         if (value === undefined || name === undefined) {
@@ -218,7 +218,17 @@ export default function Dashboard() {
                         // fallback — just show the raw value
                         return value;
                       }}
+                    /> */}
+                    <Tooltip
+                      formatter={(value, name) => {
+                        const safeValue = value ?? 0;
+                        const safeName = name ?? "";
+                        if (safeName === "sold") return [`${safeValue} units`, "Sold"];
+                        if (safeName === "revenue") return [`${safeValue.toLocaleString()}`, "Revenue"];
+                        return [safeValue, safeName];
+                      }}
                     />
+
                     <Legend />
                     <Bar dataKey="sold" fill="#10b981" name="Sold" />
                     {/* Optional: show revenue as second bar */}
