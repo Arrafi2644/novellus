@@ -73,7 +73,10 @@ export default function PosToolbar({
         <div className="flex items-center gap-4 flex-1">
           <SearchForm onSearchChange={onSearchChange} />
           <CategoryFilter onChange={onFilterChange} />
-          <Sort onChange={onSortChange} />
+          {/* <Sort onChange={onSortChange} /> */}
+           <div className="hidden md:block">
+                  <Sort onChange={onSortChange} />
+                  </div>
         </div>
 
         {/* Mobile-only cart button */}

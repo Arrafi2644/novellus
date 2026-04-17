@@ -854,12 +854,12 @@ export default function CompactFoodCard({ food }: Props) {
         <div className="flex">
 
           {/* ── Left: Food Image ── */}
-          <div className="relative w-28 min-w-[7rem] shrink-0 self-stretch">
+          <div className="relative w-24 min-w-24 shrink-0 self-stretch">
             <Image
               src={food.image}
               alt={food.name}
               fill
-              className="object-cover"
+              className="object-cover rounded-2xl ml-2"
               sizes="112px"
             />
             {/* Out of stock overlay */}
@@ -876,7 +876,7 @@ export default function CompactFoodCard({ food }: Props) {
           <div className="flex flex-col gap-2 p-2.5 text-sm flex-1 min-w-0">
 
             {/* Name + Variant / Price */}
-            <div className="flex justify-between items-center gap-2">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
               <h4 className="font-semibold leading-tight truncate">{food.name}</h4>
 
               {food.variants?.length > 1 ? (
@@ -891,7 +891,7 @@ export default function CompactFoodCard({ food }: Props) {
                     {food.variants.map((v, i) => (
                       <SelectItem key={i} value={i.toString()} className="text-xs">
                         {v.size}{" "}
-                        <Euro size={12} className="inline" />
+                        <Euro size={10} className="inline" />
                         {(v.offerPrice ?? v.price).toFixed(2)}
                         {v.totalStock === 0 && (
                           <span className="text-red-500 ml-1">(Stock Out)</span>
@@ -1051,7 +1051,7 @@ export default function CompactFoodCard({ food }: Props) {
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="h-8 w-8"
+                  className="h-4 w-4 md:h-8 md:w-8"
                   onClick={decreaseQuantity}
                 >
                   <Minus size={14} />
@@ -1060,7 +1060,7 @@ export default function CompactFoodCard({ food }: Props) {
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="h-8 w-8"
+                  className="h-4 w-4 md:h-8 md:w-8"
                   onClick={increaseQuantity}
                   disabled={quantity >= selectedVariant.totalStock || isOutOfStock}
                 >
