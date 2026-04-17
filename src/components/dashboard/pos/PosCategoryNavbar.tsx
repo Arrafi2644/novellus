@@ -45,7 +45,7 @@ export default function PosCategoryNavbar({
           onValueChange={(value) => onCategoryChange(value)}
           className="py-3"
         >
-          <TabsList className="inline-flex !h-8 md:!h-14  items-center justify-start rounded-md bg-muted p-1 text-muted-foreground overflow-x-auto whitespace-nowrap max-w-full">
+          <TabsList className="inline-flex !h-8 md:!h-12 items-center justify-start rounded-md bg-muted p-1 text-muted-foreground overflow-x-auto whitespace-nowrap max-w-full">
             {allCategories.map((cat) => (
               <TabsTrigger
                 key={cat._id}

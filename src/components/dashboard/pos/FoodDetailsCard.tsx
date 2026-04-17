@@ -851,7 +851,7 @@ export default function CompactFoodCard({ food }: Props) {
   return (
     <Card className="border shadow-sm overflow-hidden">
       <CardContent className="p-0">
-        <div className="flex">
+        <div className="flex gap-2">
 
           {/* ── Left: Food Image ── */}
           <div className="relative w-24 min-w-24 shrink-0 self-stretch">
