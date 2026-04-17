@@ -1,9 +1,6 @@
 
-import CategoryWiseFoodSection from "@/components/modules/CategoryWiseFoodSection"
 import { Separator } from "@radix-ui/react-separator"
 import PosCartSidebar from "./PosCartSidebar"
-import PosCategoryNavbar from "./PosCategoryNavbar"
-import { IFood } from "@/types"
 import PosProductsSection from "./PosProductsSection"
 
 

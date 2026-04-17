@@ -7,6 +7,8 @@ import PosToolbar from '@/components/dashboard/pos/PosToolbar';
 import TablePagination from '@/components/shared/TablePagination';
 import { useGetAllFoodsQuery } from '@/redux/features/food/food.api';
 import PosCategoryNavbar from '@/components/dashboard/pos/PosCategoryNavbar';
+import { Button } from '@/components/ui/button';
+import CartBadge from '@/components/modules/CartBadge';
 
 export default function PosPage() {
   // Filters state
@@ -48,6 +50,7 @@ export default function PosPage() {
         onSortChange={handleSortChange}
         onFilterChange={handleCategoryChange}
       />
+      
 
       <PosCategoryNavbar
         onCategoryChange={handleCategoryChange}

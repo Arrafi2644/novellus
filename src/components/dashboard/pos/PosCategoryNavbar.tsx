@@ -45,13 +45,13 @@ export default function PosCategoryNavbar({
           onValueChange={(value) => onCategoryChange(value)}
           className="py-3"
         >
-          <TabsList className="inline-flex h-10 items-center justify-start rounded-md bg-muted p-1 text-muted-foreground overflow-x-auto whitespace-nowrap max-w-full">
+          <TabsList className="inline-flex !h-14 items-center justify-start rounded-md bg-muted p-1 text-muted-foreground overflow-x-auto whitespace-nowrap max-w-full">
             {allCategories.map((cat) => (
               <TabsTrigger
                 key={cat._id}
                 value={cat._id}
                 className={cn(
-                  "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                  "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-pink-600 data-[state=active]:text-white data-[state=active]:shadow-sm"
                 )}
               >
                 {cat.title}
