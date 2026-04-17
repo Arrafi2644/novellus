@@ -104,6 +104,10 @@ useEffect(() => {
       cell: ({ row }) => `#${row.original.customOrderId ?? row.original._id.toString()}`,
     },
     {
+      accessorKey: "user.name",
+      header: "Customer",
+    },
+     {
       accessorKey: "orderType",
       header: "Type",
     },
