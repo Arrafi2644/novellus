@@ -23,6 +23,7 @@ interface CategoryDetailsModalProps {
     description?: string;
     status?: "ACTIVE" | "INACTIVE";
     image?: string;
+    totalFood?: number;
     createdAt?: string;
   };
 }
@@ -62,62 +63,75 @@ export default function CategoryDetailsModal({
         <DialogHeader className="px-6 pt-4 pb-2 text-center">
           <div className="flex gap-4 items-center">
 
-          <h2 className="text-2xl font-semibold">{category.title}</h2>
-          {category.status && (
-            <Badge
-            variant={category.status === "ACTIVE" ? "secondary" : "destructive"}
-            className="mt-2 px-3 py-1 text-sm"
-            >
-              {category.status}
-            </Badge>
-          )}
+            <h2 className="text-2xl font-semibold">{category.title}</h2>
+            {category.status && (
+              <Badge
+                variant={"outline"}
+                // className="mt-2 px-3 py-1 text-sm"
+                className={`mt-2 px-3 py-1 text-sm ${category.status === "ACTIVE"
+                    ? "bg-green-100 text-green-700 border-green-300"
+                    : "bg-red-100 text-red-700 border-red-300"
+                  }`}
+              >
+                {category.status}
+              </Badge>
+            )}
           </div>
         </DialogHeader>
 
         {/* Details Card */}
-           <div className="px-6 pb-6 space-y-4">
-         <Card className="border-0 shadow-sm bg-gray-50/70">
-           <div className="p-5 space-y-4">
-             {/* Name */}
-             <div className="flex gap-4">
-               <div className="text-muted-foreground">
-                 <span className="font-medium text-[#65758B]">Name :</span>
-                 </div>
+        <div className="px-6 pb-6 space-y-4">
+          <Card className="border-0 shadow-sm bg-gray-50/70">
+            <div className="p-5 space-y-4">
+              {/* Name */}
+              <div className="flex gap-4">
+                <div className="text-muted-foreground">
+                  <span className="font-medium text-[#65758B]">Name :</span>
+                </div>
                 <span className=" font-medium text-[#002047] break-all">
-                   {category.title}
-                 </span>
-               </div>
-               <Separator />
+                  {category.title}
+                </span>
+              </div>
+              <Separator />
+              {/* Total food  */}
+              <div className="flex gap-4">
+                <div className="text-muted-foreground">
+                  <span className="font-medium text-[#65758B]">Total Food :</span>
+                </div>
+                <span className=" font-medium text-[#002047] break-all">
+                  {category.totalFood}
+                </span>
+              </div>
+              <Separator />
+              {/* Description */}
+              <div className="flex gap-4">
+                <div className=" flex gap-2 text-muted-foreground">
+                  <span className="font-medium text-[#65758B]">Description</span>
+                  <span className="font-medium text-[#65758B]"> :</span>
+                </div>
+                <span className="font-medium text-[#002047] break-all">
+                  {category.description || "N/A"}
+                </span>
+              </div>
+              <Separator />
 
-               {/* Description */}
-               <div className="flex gap-4">
-                 <div className=" flex gap-2 text-muted-foreground">
-                   <span className="font-medium text-[#65758B]">Description</span>
-                   <span className="font-medium text-[#65758B]"> :</span>
-                 </div>
-                 <span className="font-medium text-[#002047] break-all">
-                   {category.description || "N/A"}
-                 </span>
-               </div>
-               <Separator />
-
-               {/* Created At */}
-               {category.createdAt && (
-                 <div className="flex gap-4">
-                   <div className=" text-muted-foreground">
-                     <span className="font-medium text-[#65758B]">Created at :</span>
-                   </div>
-                   <span className="font-medium text-[#002047]">
-                     {new Date(category.createdAt).toLocaleDateString("en-US", {
-                       month: "long",
-                       year: "numeric",
-                     })}
-                   </span>
-                 </div>
-               )}
-             </div>
-           </Card>
-         </div>
+              {/* Created At */}
+              {category.createdAt && (
+                <div className="flex gap-4">
+                  <div className=" text-muted-foreground">
+                    <span className="font-medium text-[#65758B]">Created at :</span>
+                  </div>
+                  <span className="font-medium text-[#002047]">
+                    {new Date(category.createdAt).toLocaleDateString("en-US", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                </div>
+              )}
+            </div>
+          </Card>
+        </div>
 
         {/* Footer */}
         <DialogFooter className="border-t bg-gray-50/80 px-6 py-4">

@@ -64,6 +64,8 @@ export default function MyOrdersPage() {
   };
 
 
+  console.log(orders)
+
   return (
     <div className="container mx-auto py-6 px-4">
       {/* Header */}
@@ -132,6 +134,7 @@ export default function MyOrdersPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Order ID</TableHead>
+                  <TableHead>Customer</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Items</TableHead>
                   <TableHead>Total</TableHead>
@@ -146,6 +149,9 @@ export default function MyOrdersPage() {
                   <TableRow key={order._id} className="hover:bg-muted/50">
                     <TableCell className="font-medium">
                       #{ order.customOrderId ?? order._id.toString()}
+                    </TableCell>
+                     <TableCell>
+                      {order?.user?.name}
                     </TableCell>
                     <TableCell>
                       {format(new Date(order.createdAt!), "dd MMM yyyy")}
@@ -308,6 +314,16 @@ export default function MyOrdersPage() {
                   </div>
                 </div>
 
+                              <div>
+                <h3 className="font-semibold mb-2">Customer Information</h3>
+                <div className="space-y-1 text-sm">
+                  <p><strong>Name:</strong> {orderDetails?.data?.user?.name || "N/A"}</p>
+                  <p><strong>Email:</strong> {orderDetails?.data?.user?.email || "N/A"}</p>
+                  <p><strong>Phone:</strong> {orderDetails?.data?.user?.phone || "N/A"}</p>
+                  <p><strong>Address:</strong> {orderDetails?.data?.user?.address || "N/A"}</p>
+                </div>
+              </div>
+
                 <div>
                   <h3 className="font-semibold mb-2">Payment Information</h3>
                   <div className="space-y-1 text-sm">
@@ -316,6 +332,7 @@ export default function MyOrdersPage() {
                       <Euro className="w-3 h-3 inline mx-1 -mt-0.5" />
                       {orderDetails.data.totalPrice.toFixed(2)}
                     </p>
+                    <p><strong>TransactionId:</strong> {orderDetails?.data?.payment?.transactionId || "N/A"}</p>
                   </div>
                 </div>
               </div>

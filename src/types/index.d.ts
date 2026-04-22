@@ -96,6 +96,7 @@ export interface ICategory {
   image: string;
   status: CategoryStatus;
   showOrder: number;
+  totalFood? : number;
 }
 
 

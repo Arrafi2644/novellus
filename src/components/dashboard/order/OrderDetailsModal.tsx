@@ -15,7 +15,7 @@ import { format } from "date-fns";
 interface OrderDetailsModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  orderDetails: any;     
+  orderDetails: any;
   isDetailsLoading: boolean;
   selectedOrderId: string | null;
 }
@@ -33,7 +33,7 @@ export default function OrderDetailsModal({
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            Order Details #{orderDetails?.data?.customOrderId ?? orderDetails?.data?. _id}
+            Order Details #{orderDetails?.data?.customOrderId ?? orderDetails?.data?._id}
           </DialogTitle>
         </DialogHeader>
 
@@ -59,6 +59,16 @@ export default function OrderDetailsModal({
               </div>
 
               <div>
+                <h3 className="font-semibold mb-2">Customer Information</h3>
+                <div className="space-y-1 text-sm">
+                  <p><strong>Name:</strong> {orderDetails?.data?.user?.name || "N/A"}</p>
+                  <p><strong>Email:</strong> {orderDetails?.data?.user?.email || "N/A"}</p>
+                  <p><strong>Phone:</strong> {orderDetails?.data?.user?.phone || "N/A"}</p>
+                  <p><strong>Address:</strong> {orderDetails?.data?.user?.address || "N/A"}</p>
+                </div>
+              </div>
+
+              <div>
                 <h3 className="font-semibold mb-2">Payment Information</h3>
                 <div className="space-y-1 text-sm">
                   <p><strong>Method:</strong> {orderDetails?.data?.payment?.paymentMethod || "N/A"}</p>
@@ -66,6 +76,7 @@ export default function OrderDetailsModal({
                     <Euro className="w-3 h-3 inline mx-1 -mt-0.5" />
                     {orderDetails.data.totalPrice.toFixed(2)}
                   </p>
+                  <p><strong>TransactionId:</strong> {orderDetails?.data?.payment?.transactionId || "N/A"}</p>
                 </div>
               </div>
             </div>
