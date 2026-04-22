@@ -64,7 +64,7 @@ const CategoryManagementPage = () => {
   // Table columns
   const columns: ColumnDef<ICategory>[] = [
     { accessorKey: "title", header: "Title" },
-    { accessorKey: "slug", header: "Slug" },
+    { accessorKey: "totalFood", header: "Total Food" },
     { accessorKey: "status", header: "Status" },
   ];
 

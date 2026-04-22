@@ -44,7 +44,7 @@ const rangeOptions = [
 ] as const;
 
 export default function Dashboard() {
-  const [range, setRange] = useState<RangeType>("7days");
+  const [range, setRange] = useState<RangeType>("all");
 
   // API calls with range
   const {
@@ -69,6 +69,8 @@ export default function Dashboard() {
     cancelledOrders: 0,
     orderTrend: [],
   };
+
+  console.log(orderData)
 
   const orderChartData = (orderState.orderTrend ?? []).map((item: any) => ({
     date: item._id,
@@ -122,7 +124,7 @@ export default function Dashboard() {
         />
         <StatCard
           title="Total Revenue"
-          value={`${orderState.totalRevenue.toLocaleString()}`}
+          value={`${orderState.totalRevenue}`}
           icon={<Euro className="h-5 w-5" />}
           loading={isLoading}
         />
