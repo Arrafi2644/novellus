@@ -13,7 +13,7 @@
 }
 
 
-@media print {
+/* @media print {
   body * {
     visibility: hidden;
   }
@@ -31,8 +31,42 @@
     margin: 0;
     padding: 0;
   }
-}
+} */
 
+@media print {
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+    overflow: visible;
+  }
+
+  #printable-receipt,
+  #printable-receipt * {
+    visibility: visible;
+  }
+
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58mm; 
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    display: block !important;
+  }
+
+  html, body {
+    height: auto;
+    width: 58mm;
+  }
+}
 
 @theme inline {
   --color-background: var(--background);

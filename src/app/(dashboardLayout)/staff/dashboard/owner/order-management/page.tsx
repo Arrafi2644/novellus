@@ -431,110 +431,100 @@ const OrderManagementPage = () => {
       />
 
       {/* --- Print Template Start --- */}
-      <div id="printable-receipt" className="hidden print:block font-mono text-[10px] w-[58mm] leading-tight text-black bg-white p-1">
-        {activeOrderForPrint && (
-          <div className="flex flex-col">
-            {/* Restaurant Header */}
-            <div className="flex flex-col items-center">
-              <h2 className="text-sm font-bold uppercase text-center">Pizzeria Novellus</h2>
-              <p className="text-[8px] text-center mb-1 italic">Delicious Pizza Ordering App</p>
-            </div>
-
-            <div className="w-full border-b border-dashed border-black my-1"></div>
-
-            {/* Order and Customer Details */}
-            <div className="w-full space-y-0.5">
-              <p className="flex justify-between font-bold">
-                <span>ORDER ID:</span>
-                <span>#{activeOrderForPrint.customOrderId || activeOrderForPrint._id.slice(-6)}</span>
-              </p>
-              <p className="flex justify-between">
-                <span>TYPE:</span>
-                <span className="font-bold">{activeOrderForPrint.orderType}</span>
-              </p>
-
-              {/* Customer Info */}
-              <div className="mt-1 border-t border-dotted border-black pt-1">
-                <p className="font-bold">CUSTOMER INFO:</p>
-                <p className="capitalize">Name: {activeOrderForPrint.user?.name || "Guest Customer"}</p>
-                {activeOrderForPrint.user?.phone && (
-                  <p className="font-bold text-xs">Phone: {activeOrderForPrint.user.phone}</p>
-                )}
-              </div>
-
-              {/* Delivery Details */}
-              <div className="mt-1 border-t border-dotted border-black pt-1">
-                <p className="font-bold">DELIVERY/PICKUP:</p>
-                <p className="uppercase font-bold text-xs bg-black text-white px-1 inline-block">
-                  {activeOrderForPrint.deliveryOption}
-                </p>
-                {activeOrderForPrint.deliveryAddress && (
-                  <p className="mt-0.5 text-[9px] font-semibold">
-                    Addr: {activeOrderForPrint.deliveryAddress}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="w-full border-b border-dashed border-black my-2"></div>
-
-            {/* Food List */}
-            <div className="w-full">
-              <div className="flex justify-between font-bold mb-1">
-                <span>ITEM</span>
-                <span className="pl-2 text-right">TOTAL</span>
-              </div>
-
-              {activeOrderForPrint.foods?.map((item: any, idx: number) => (
-                <div key={idx} className="mb-2">
-                  <div className="flex justify-between items-start">
-                    <span className="w-[75%] capitalize font-semibold leading-none">
-                      {item.quantity}x {item.food.name}
-                    </span>
-                    <span className="w-[25%] text-right font-bold">€{item.lineTotal.toFixed(2)}</span>
-                  </div>
-
-                  {/* Ingredients */}
-                  {item.ingredients?.length > 0 && (
-                    <div className="text-[8px] text-gray-800 pl-2 italic leading-none mt-0.5">
-                      + {item.ingredients.map((ing: any) => ing.name).join(", ")}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div className="w-full border-b border-dashed border-black my-1"></div>
-
-            {/* Grad total and Payment */}
-            <div className="w-full space-y-1">
-              <div className="flex justify-between text-xs font-bold bg-gray-100 p-0.5">
-                <span>GRAND TOTAL</span>
-                <span>€{activeOrderForPrint.totalPrice.toFixed(2)}</span>
-              </div>
-
-              <div className="text-[9px] flex justify-between">
-                <span>Payment Mode:</span>
-                <span className="font-bold">{activeOrderForPrint.payment?.paymentMethod}</span>
-              </div>
-
-              <div className="text-[9px] flex justify-between">
-                <span>Payment Status:</span>
-                <span className="font-bold underline">{activeOrderForPrint.payment?.paymentStatus}</span>
-              </div>
-            </div>
-
-            <div className="w-full border-b border-dashed border-black my-1"></div>
-
-            {/* Time and Footer */}
-            <p className="text-[7px] text-center">Printed on: {format(new Date(), "dd MMM yyyy, hh:mm a")}</p>
-            <p className="text-center mt-2 font-bold uppercase text-xs">*** Thank you for Ordering ***</p>
-
-            {/* printer cutting space*/}
-            <div className="h-10 text-center text-[7px]">------------------------</div>
-          </div>
-        )}
+{/* --- হিডেন প্রিন্ট টেমপ্লেট শুরু --- */}
+<div id="printable-receipt" className="hidden print:block font-mono text-[12px] w-[58mm] leading-snug text-black bg-white p-0">
+  {activeOrderForPrint && (
+    <div className="flex flex-col px-1">
+      {/* রেস্টুরেন্ট হেডার */}
+      <div className="flex flex-col items-center mt-2">
+        <h2 className="text-[16px] font-bold uppercase tracking-tighter">Pizzeria Novellus</h2>
+        <p className="text-[10px] italic">Delicious Pizza Ordering App</p>
       </div>
+      
+      <div className="w-full border-b border-black my-1"></div>
+      
+      {/* অর্ডার ডিটেইলস */}
+      <div className="w-full space-y-1">
+        <div className="flex justify-between font-bold">
+          <span>ORDER ID:</span> 
+          <span>#{activeOrderForPrint.customOrderId || activeOrderForPrint._id.slice(-6)}</span>
+        </div>
+        
+        <div className="border-t border-black border-dotted pt-1">
+          <p className="font-bold">CUSTOMER:</p>
+          <p className="capitalize text-[13px]">{activeOrderForPrint.user?.name || "Guest Customer"}</p>
+        </div>
+
+        <div className="border-t border-black border-dotted pt-1 pb-1">
+          <p className="font-bold">DELIVERY TO:</p>
+          <p className="font-bold uppercase text-[11px] border border-black px-1 inline-block mb-1">
+            {activeOrderForPrint.deliveryOption}
+          </p>
+          {activeOrderForPrint.deliveryAddress && (
+            <p className="text-[12px] leading-tight font-semibold">
+              {activeOrderForPrint.deliveryAddress}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="w-full border-b-2 border-black my-1"></div>
+
+      {/* খাবার তালিকা */}
+      <div className="w-full">
+        <div className="flex justify-between font-bold mb-1 border-b border-black">
+          <span>ITEM</span>
+          <span>PRICE</span>
+        </div>
+        
+        {activeOrderForPrint.foods?.map((item: any, idx: number) => (
+          <div key={idx} className="mb-2">
+            <div className="flex justify-between items-start">
+              <span className="w-[70%] capitalize font-bold text-[13px]">
+                {item.quantity}x {item.food.name}
+              </span>
+              <span className="w-[30%] text-right font-bold">€{item.lineTotal.toFixed(2)}</span>
+            </div>
+            
+            {/* ইনগ্রিডিয়েন্টস */}
+            {item.ingredients?.length > 0 && (
+              <div className="text-[10px] text-black pl-1 italic leading-none mt-1">
+                + {item.ingredients.map((ing: any) => ing.name).join(", ")}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="w-full border-b-2 border-black my-1"></div>
+
+      {/* টোটাল এবং পেমেন্ট */}
+      <div className="w-full space-y-1">
+        <div className="flex justify-between text-[15px] font-bold py-1 border-y border-black">
+          <span>GRAND TOTAL</span>
+          <span>€{activeOrderForPrint.totalPrice.toFixed(2)}</span>
+        </div>
+        
+        <div className="text-[11px] flex justify-between pt-1">
+          <span>Payment:</span>
+          <span className="font-bold uppercase">{activeOrderForPrint.payment?.paymentMethod} ({activeOrderForPrint.payment?.paymentStatus})</span>
+        </div>
+      </div>
+
+      <div className="w-full border-b border-black my-2"></div>
+      
+      {/* টাইম এবং ফুটার */}
+      <p className="text-[10px] text-center font-bold">
+        {format(new Date(activeOrderForPrint.createdAt), "dd MMM yyyy, hh:mm a")}
+      </p>
+      <p className="text-center mt-3 font-extrabold text-[14px]">*** THANK YOU ***</p>
+      
+      {/* প্রিন্টারের কাটিং স্পেস */}
+      <div className="h-12 text-center text-[10px] pt-2">. . . . . . . . . . . . . . . .</div>
+    </div>
+  )}
+</div>
+{/* --- হিডেন প্রিন্ট টেমপ্লেট শেষ --- */}
       {/* Print Template End */}
 
       {selectedOrderId && (
