@@ -4,7 +4,7 @@ let socket: Socket | null = null;
 
 export const getSocket = () => {
   if (!socket) {
-    socket = io(process.env.NEXT_PUBLIC_API_SOCKET_URL!, {  // ✅ ঠিক variable
+    socket = io(process.env.NEXT_PUBLIC_API_SOCKET_URL!, {  
       transports: ["websocket"],
     });
 
