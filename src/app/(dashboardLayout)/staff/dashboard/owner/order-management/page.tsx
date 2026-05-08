@@ -431,11 +431,9 @@ const OrderManagementPage = () => {
       />
 
       {/* --- Print Template Start --- */}
-{/* --- হিডেন প্রিন্ট টেমপ্লেট শুরু --- */}
 <div id="printable-receipt" className="hidden print:block font-mono text-[12px] w-[58mm] leading-snug text-black bg-white p-0">
   {activeOrderForPrint && (
     <div className="flex flex-col px-1">
-      {/* রেস্টুরেন্ট হেডার */}
       <div className="flex flex-col items-center mt-2">
         <h2 className="text-[16px] font-bold uppercase tracking-tighter">Pizzeria Novellus</h2>
         <p className="text-[10px] italic">Delicious Pizza Ordering App</p>
@@ -443,7 +441,6 @@ const OrderManagementPage = () => {
       
       <div className="w-full border-b border-black my-1"></div>
       
-      {/* অর্ডার ডিটেইলস */}
       <div className="w-full space-y-1">
         <div className="flex justify-between font-bold">
           <span>ORDER ID:</span> 
@@ -470,7 +467,6 @@ const OrderManagementPage = () => {
 
       <div className="w-full border-b-2 border-black my-1"></div>
 
-      {/* খাবার তালিকা */}
       <div className="w-full">
         <div className="flex justify-between font-bold mb-1 border-b border-black">
           <span>ITEM</span>
@@ -486,7 +482,6 @@ const OrderManagementPage = () => {
               <span className="w-[30%] text-right font-bold">€{item.lineTotal.toFixed(2)}</span>
             </div>
             
-            {/* ইনগ্রিডিয়েন্টস */}
             {item.ingredients?.length > 0 && (
               <div className="text-[10px] text-black pl-1 italic leading-none mt-1">
                 + {item.ingredients.map((ing: any) => ing.name).join(", ")}
@@ -498,7 +493,6 @@ const OrderManagementPage = () => {
 
       <div className="w-full border-b-2 border-black my-1"></div>
 
-      {/* টোটাল এবং পেমেন্ট */}
       <div className="w-full space-y-1">
         <div className="flex justify-between text-[15px] font-bold py-1 border-y border-black">
           <span>GRAND TOTAL</span>
@@ -513,18 +507,15 @@ const OrderManagementPage = () => {
 
       <div className="w-full border-b border-black my-2"></div>
       
-      {/* টাইম এবং ফুটার */}
       <p className="text-[10px] text-center font-bold">
         {format(new Date(activeOrderForPrint.createdAt), "dd MMM yyyy, hh:mm a")}
       </p>
       <p className="text-center mt-3 font-extrabold text-[14px]">*** THANK YOU ***</p>
       
-      {/* প্রিন্টারের কাটিং স্পেস */}
       <div className="h-12 text-center text-[10px] pt-2">. . . . . . . . . . . . . . . .</div>
     </div>
   )}
 </div>
-{/* --- হিডেন প্রিন্ট টেমপ্লেট শেষ --- */}
       {/* Print Template End */}
 
       {selectedOrderId && (
