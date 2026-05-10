@@ -13,7 +13,7 @@
 }
 
 
-@media print {
+/* @media print {
   body * {
     visibility: hidden;
   }
@@ -31,19 +31,16 @@
     margin: 0;
     padding: 0;
   }
-}
+} */
 
 /* @media print {
   @page {
+    size: 58mm auto;
     margin: 0;
-    size: auto;
   }
 
-  body {
-    margin: 0;
-    padding: 0;
+  body * {
     visibility: hidden;
-    overflow: visible;
   }
 
   #printable-receipt,
@@ -52,21 +49,49 @@
   }
 
   #printable-receipt {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    width: 58mm; 
-    max-width: 100%;
+    width: 58mm !important;
     margin: 0;
     padding: 0;
-    display: block !important;
+  }
+} */
+
+
+@media print {
+  @page {
+    size: 58mm auto;
+    margin: 0;
   }
 
   html, body {
-    height: auto;
-    width: 58mm;
+    height: auto !important;
+    overflow: hidden !important; /* ✅ extra space কাটবে */
   }
-} */
+
+  body * {
+    visibility: hidden;
+  }
+
+  #printable-receipt,
+  #printable-receipt * {
+    visibility: visible;
+  }
+
+  #printable-receipt {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 58mm !important;
+    /* ✅ নিচের দুটো লাইন নতুন */
+    height: auto !important;
+    overflow: hidden !important;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 
 @theme inline {
   --color-background: var(--background);

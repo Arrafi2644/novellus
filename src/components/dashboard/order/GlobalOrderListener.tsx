@@ -9,6 +9,28 @@ import { OrderReceiptTemplate } from "@/components/shared/OrderReceiptTemplate";
 export const GlobalOrderListener = () => {
     const [activeOrderForPrint, setActiveOrderForPrint] = useState<any>(null);
 
+    // useEffect(() => {
+    //     const socket = getSocket();
+
+    //     const handleNewOrder = (order: any) => {
+    //         const audio = new Audio("/sounds/notification.wav");
+    //         audio.play().catch((err) => console.log("Audio play error:", err));
+
+    //         toast.success("New order received! Printing receipt...");
+    //         setActiveOrderForPrint(order);
+
+    //         setTimeout(() => {
+    //             window.print();
+    //         }, 1000);
+    //     };
+
+    //     socket.on("new-order", handleNewOrder);
+    //     return () => {
+    //         socket.off("new-order", handleNewOrder);
+    //     };
+    // }, []);
+
+
     useEffect(() => {
         const socket = getSocket();
 
@@ -20,6 +42,12 @@ export const GlobalOrderListener = () => {
             setActiveOrderForPrint(order);
 
             setTimeout(() => {
+                // ✅ print শেষ হলে state clear
+                const afterPrint = () => {
+                    setActiveOrderForPrint(null);
+                    window.removeEventListener("afterprint", afterPrint);
+                };
+                window.addEventListener("afterprint", afterPrint);
                 window.print();
             }, 1000);
         };
