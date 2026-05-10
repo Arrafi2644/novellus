@@ -72,22 +72,42 @@ const OrderManagementPage = () => {
   useEffect(() => {
     const socket = getSocket();
 
+    // const handleNewOrder = (order: any) => {
+    //   // ১. নোটিফিকেশন সাউন্ড
+    //   const audio = new Audio("/sounds/notification.wav");
+    //   audio.play().catch((err) => console.log("Audio play error:", err));
+
+    //   toast.success("New order received! Printing receipt...");
+
+    //   // ২. প্রিন্ট স্টেটে অর্ডারের ডাটা সেট করা
+    //   setActiveOrderForPrint(order);
+
+    //   // ৩. DOM আপডেট হওয়ার জন্য সামান্য সময় দিয়ে সাইলেন্ট প্রিন্ট কল করা
+    //   setTimeout(() => {
+    //     window.print();
+    //     refetch();
+    //   }, 1000); // ১ সেকেন্ড সময় দেওয়া হলো যাতে ডাটা রেন্ডার হয়
+    // };
+
+
     const handleNewOrder = (order: any) => {
-      // ১. নোটিফিকেশন সাউন্ড
       const audio = new Audio("/sounds/notification.wav");
       audio.play().catch((err) => console.log("Audio play error:", err));
 
       toast.success("New order received! Printing receipt...");
-
-      // ২. প্রিন্ট স্টেটে অর্ডারের ডাটা সেট করা
       setActiveOrderForPrint(order);
 
-      // ৩. DOM আপডেট হওয়ার জন্য সামান্য সময় দিয়ে সাইলেন্ট প্রিন্ট কল করা
       setTimeout(() => {
-        window.print();
+        // ✅ Android app থাকলে JSON পাঠাও, browser হলে window.print()
+        if ((window as any).AndroidPrint) {
+          (window as any).AndroidPrint.printOrder(JSON.stringify(order));
+        } else {
+          window.print();
+        }
         refetch();
-      }, 1000); // ১ সেকেন্ড সময় দেওয়া হলো যাতে ডাটা রেন্ডার হয়
+      }, 1000);
     };
+
 
     socket.on("new-order", handleNewOrder);
 
@@ -207,7 +227,15 @@ const OrderManagementPage = () => {
           <div className="flex flex-col px-1">
             <div className="flex flex-col items-center mt-2">
               <div>
-                <Image src={logo} alt="Pizzeria Novellus" width={80} height={80} />
+                {/* <Image src={logo} alt="Pizzeria Novellus" width={80} height={80} /> */}
+                <img
+                  src="/assets/logo-112.png"
+                  alt="Pizzeria Novellus"
+                  width={80}
+                  height={80}
+                  style={{ display: 'block' }}
+                />
+
               </div>
               <h2 className="text-[16px] font-bold uppercase tracking-tighter">Pizzeria Novellus</h2>
               <p className="text-[10px] italic">Delicious Pizza Ordering App</p>
