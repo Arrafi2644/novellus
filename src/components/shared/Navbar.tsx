@@ -11,7 +11,7 @@ import { getCart } from '@/utils/cart-helper';
 import AllCarts from '../modules/AllCarts';
 import { NavbarDropdown } from '../modules/NavbarDropdown';
 import { useUser } from '@/context/UserContext';
-import { useFood } from '@/context/FoodContext';   // ✅ Context import
+import { useFood } from '@/context/FoodContext';
 import Link from 'next/link';
 import SearchInput from '../modules/SearchInput';
 import { ForgotPasswordForm } from '../modules/ForgotPasswordForm';
@@ -19,7 +19,7 @@ import { ForgotPasswordForm } from '../modules/ForgotPasswordForm';
 export default function Navbar() {
 
     const { user, logout } = useUser();
-    const { foods, setSearchTerm } = useFood();   // ✅ Global foods + search
+    const { foods, setSearchTerm } = useFood();
 
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -41,8 +41,6 @@ export default function Navbar() {
     }, []);
 
     const cartCount = cartItems.length;
-
-    console.log("user in navbar ", user)
 
     return (
         <>
@@ -167,7 +165,7 @@ export default function Navbar() {
     isOpen={isLoginOpen}
     onClose={() => setIsLoginOpen(false)}
     onSwitchToSignup={() => setIsSignupOpen(true)}
-    onSwitchToForgot={() => setIsForgotOpen(true)} // <-- pass here
+    onSwitchToForgot={() => setIsForgotOpen(true)}
 />
 
 <ForgotPasswordForm
