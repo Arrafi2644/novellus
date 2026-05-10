@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getSocket } from "@/lib/socket";
-import { OrderReceiptTemplate } from "@/components/shared/OrderReceiptTemplate";
+// import { OrderReceiptTemplate } from "@/components/shared/OrderReceiptTemplate";
 
 export const GlobalOrderListener = () => {
     const [activeOrderForPrint, setActiveOrderForPrint] = useState<any>(null);
@@ -65,7 +65,7 @@ export const GlobalOrderListener = () => {
             id="printable-receipt"
             className="hidden print:block font-mono text-[12px] w-[58mm] leading-snug text-black bg-white p-0"
         >
-            <OrderReceiptTemplate order={activeOrderForPrint} />
+            {/* <OrderReceiptTemplate order={activeOrderForPrint} /> */}
         </div>
     );
 };

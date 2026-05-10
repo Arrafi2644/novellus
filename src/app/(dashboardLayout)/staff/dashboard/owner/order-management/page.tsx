@@ -23,6 +23,7 @@ import OrderDetailsModal from "@/components/dashboard/order/OrderDetailsModal";
 import UpdateOrderModal from "@/components/dashboard/order/UpdateOrderModal";
 import { IOrder } from "@/types";
 import { format } from "date-fns";
+import { getSocket } from "@/lib/socket";
 
 export enum OrderStatus {
   PENDING = "PENDING",
@@ -41,6 +42,9 @@ const OrderManagementPage = () => {
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [page, setPage] = useState(1);
   const limit = 10;
+
+  // প্রিন্ট করার জন্য অর্ডারের ডাটা রাখার স্টেট
+  const [activeOrderForPrint, setActiveOrderForPrint] = useState<any>(null);
 
   const { data, isLoading, isError, refetch } = useGetAllOrdersQuery({
     ...(searchTerm && { searchTerm: searchTerm.trim() }),
@@ -63,7 +67,37 @@ const OrderManagementPage = () => {
   const [orderToDelete, setOrderToDelete] = useState<IOrder | null>(null);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
 
+  useEffect(() => {
+    const socket = getSocket();
 
+    const handleNewOrder = (order: any) => {
+      // ১. নোটিফিকেশন সাউন্ড
+      const audio = new Audio("/sounds/notification.wav");
+      audio.play().catch((err) => console.log("Audio play error:", err));
+
+      toast.success("New order received! Printing receipt...");
+
+      // ২. প্রিন্ট স্টেটে অর্ডারের ডাটা সেট করা
+      setActiveOrderForPrint(order);
+
+      // ৩. DOM আপডেট হওয়ার জন্য সামান্য সময় দিয়ে সাইলেন্ট প্রিন্ট কল করা
+      setTimeout(() => {
+        window.print();
+        refetch();
+      }, 1000); // ১ সেকেন্ড সময় দেওয়া হলো যাতে ডাটা রেন্ডার হয়
+    };
+
+    socket.on("new-order", handleNewOrder);
+
+    return () => {
+      socket.off("new-order", handleNewOrder);
+    };
+  }, [refetch]);
+
+
+  console.log("Active order for print:", activeOrderForPrint);
+
+  // Delete / Cancel handler
   const handleDeleteOrder = async (order: IOrder) => {
     try {
       const id = order._id;
@@ -164,6 +198,101 @@ const OrderManagementPage = () => {
         totalPages={data?.meta?.totalPage ?? 1}
         onPageChange={setPage}
       />
+
+      {/* --- Print Template Start --- */}
+      <div id="printable-receipt" className="hidden print:block font-mono text-[12px] w-[58mm] leading-snug text-black bg-white p-0">
+        {activeOrderForPrint && (
+          <div className="flex flex-col px-1">
+            <div className="flex flex-col items-center mt-2">
+              <h2 className="text-[16px] font-bold uppercase tracking-tighter">Pizzeria Novellus</h2>
+              <p className="text-[10px] italic">Delicious Pizza Ordering App</p>
+            </div>
+
+            <div className="w-full border-b border-black my-1"></div>
+
+            <div className="w-full space-y-1">
+              <div className="flex justify-between font-bold">
+                <span>ORDER ID:</span>
+                <span>#{activeOrderForPrint.customOrderId || activeOrderForPrint._id.slice(-6)}</span>
+              </div>
+
+              <div className="border-t border-black border-dotted pt-1 flex flex-wrap justify-between gap-2">
+                <p className="font-bold">CUSTOMER:</p>
+                <p className="capitalize text-[13px]">{activeOrderForPrint.user?.name || "Guest Customer"}</p>
+              </div>
+
+              <div className="pt-1 flex flex-wrap justify-between gap-2">
+                <p className="font-bold">PHONE:</p>
+                <p className="capitalize text-[13px]">{activeOrderForPrint.user?.phone || "N/A"}</p>
+              </div>
+
+              <div className="pt-1 flex flex-wrap justify-between gap-2">
+                <p className="font-bold">EMAIL:</p>
+                <p className="capitalize text-[13px]">{activeOrderForPrint.user?.email || "N/A"}</p>
+              </div>
+
+              <div className="pt-1 pb-1 flex flex-wrap justify-between gap-2">
+                <p className="font-bold">DELIVERY TO:</p>
+                {activeOrderForPrint.deliveryAddress && (
+                  <p className="text-[12px] leading-tight font-semibold">
+                    {activeOrderForPrint.deliveryAddress}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="w-full border-b-2 border-black my-1"></div>
+
+            <div className="w-full">
+              <div className="flex justify-between font-bold mb-1 border-b border-black">
+                <span>ITEM</span>
+                <span>PRICE</span>
+              </div>
+
+              {activeOrderForPrint.foods?.map((item: any, idx: number) => (
+                <div key={idx} className="mb-2">
+                  <div className="flex justify-between items-start">
+                    <span className="w-[70%] capitalize font-bold text-[13px]">
+                      {item.quantity}x {item.food.name}
+                    </span>
+                    <span className="w-[30%] text-right font-bold">€{item.lineTotal.toFixed(2)}</span>
+                  </div>
+
+                  {item.ingredients?.length > 0 && (
+                    <div className="text-[10px] text-black pl-1 italic leading-none mt-1">
+                      + {item.ingredients.map((ing: any) => ing.name).join(", ")}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="w-full border-b-2 border-black my-1"></div>
+
+            <div className="w-full space-y-1">
+              <div className="flex justify-between text-[15px] font-bold py-1 border-y border-black">
+                <span>GRAND TOTAL</span>
+                <span>€{activeOrderForPrint.totalPrice.toFixed(2)}</span>
+              </div>
+
+              <div className="text-[11px] flex justify-between pt-1">
+                <span>Payment:</span>
+                <span className="font-bold uppercase">{activeOrderForPrint.payment?.paymentMethod}</span>
+              </div>
+            </div>
+
+            <div className="w-full border-b border-black my-2"></div>
+
+            <p className="text-[10px] text-center font-bold">
+              {format(new Date(activeOrderForPrint.createdAt), "dd MMM yyyy, hh:mm a")}
+            </p>
+            <p className="text-center mt-3 font-extrabold text-[14px]">*** THANK YOU ***</p>
+
+            <div className="h-12 text-center text-[10px] pt-2">. . . . . . . . . . . . . . . .</div>
+          </div>
+        )}
+      </div>
+      {/* Print Template End */}
 
       {selectedOrderId && (
         <OrderDetailsModal
