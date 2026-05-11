@@ -75,6 +75,7 @@ export interface IUser {
   picture: string
   phone?: string
   address?: string
+  doorbell?: string
   createdAt: string
   updatedAt: string
 }
@@ -168,6 +169,7 @@ export interface IOrder {
 
   deliveryOption: DeliveryOption;
   deliveryAddress?: string;
+  doorbell?: string;
 
   status: OrderStatus;
 

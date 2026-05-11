@@ -45,7 +45,6 @@ const OrderManagementPage = () => {
   const [page, setPage] = useState(1);
   const limit = 10;
 
-  // প্রিন্ট করার জন্য অর্ডারের ডাটা রাখার স্টেট
   const [activeOrderForPrint, setActiveOrderForPrint] = useState<any>(null);
 
   const { data, isLoading, isError, refetch } = useGetAllOrdersQuery({
@@ -72,25 +71,8 @@ const OrderManagementPage = () => {
   useEffect(() => {
     const socket = getSocket();
 
-    // const handleNewOrder = (order: any) => {
-    //   // ১. নোটিফিকেশন সাউন্ড
-    //   const audio = new Audio("/sounds/notification.wav");
-    //   audio.play().catch((err) => console.log("Audio play error:", err));
-
-    //   toast.success("New order received! Printing receipt...");
-
-    //   // ২. প্রিন্ট স্টেটে অর্ডারের ডাটা সেট করা
-    //   setActiveOrderForPrint(order);
-
-    //   // ৩. DOM আপডেট হওয়ার জন্য সামান্য সময় দিয়ে সাইলেন্ট প্রিন্ট কল করা
-    //   setTimeout(() => {
-    //     window.print();
-    //     refetch();
-    //   }, 1000); // ১ সেকেন্ড সময় দেওয়া হলো যাতে ডাটা রেন্ডার হয়
-    // };
-
-
     const handleNewOrder = (order: any) => {
+
       const audio = new Audio("/sounds/notification.wav");
       audio.play().catch((err) => console.log("Audio play error:", err));
 
@@ -98,7 +80,6 @@ const OrderManagementPage = () => {
       setActiveOrderForPrint(order);
 
       setTimeout(() => {
-        // ✅ Android app থাকলে JSON পাঠাও, browser হলে window.print()
         if ((window as any).AndroidPrint) {
           (window as any).AndroidPrint.printOrder(JSON.stringify(order));
         } else {
@@ -250,22 +231,25 @@ const OrderManagementPage = () => {
               </div>
 
               <div className="border-t border-black border-dotted pt-1 flex flex-wrap justify-between gap-2">
-                <p className="font-bold">CUSTOMER:</p>
+                <p className="font-bold">CLIENTE:</p>
                 <p className="capitalize text-[13px]">{activeOrderForPrint.user?.name || "Guest Customer"}</p>
               </div>
 
               <div className="pt-1 flex flex-wrap justify-between gap-2">
-                <p className="font-bold">PHONE:</p>
+                <p className="font-bold">NUMERO:</p>
                 <p className="capitalize text-[13px]">{activeOrderForPrint.user?.phone || "N/A"}</p>
               </div>
 
               <div className="pt-1 flex flex-wrap justify-between gap-2">
-                <p className="font-bold">EMAIL:</p>
+                <p className="font-bold">E-MAIL:</p>
                 <p className="capitalize text-[13px]">{activeOrderForPrint.user?.email || "N/A"}</p>
               </div>
-
+              <div className="pt-1 flex flex-wrap justify-between gap-2">
+                <p className="font-bold">CAMPANELLO:</p>
+                <p className="capitalize text-[13px]">{activeOrderForPrint.user?.doorbell || activeOrderForPrint?.doorbell || "N/A"}</p>
+              </div>
               <div className="pt-1 pb-1 flex flex-wrap justify-between gap-2">
-                <p className="font-bold">DELIVERY TO:</p>
+                <p className="font-bold">INDIRIZZO:</p>
                 {activeOrderForPrint.deliveryAddress && (
                   <p className="text-[12px] leading-tight font-semibold">
                     {activeOrderForPrint.deliveryAddress}
