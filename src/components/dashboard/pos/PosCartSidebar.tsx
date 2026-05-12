@@ -59,6 +59,7 @@ const posFormSchema = z.object({
   phone: z.string().min(10, "Valid phone number is required"),
   email: z.string().email("Invalid email"),
   address: z.string().min(2, "Address is required"),
+  doorbell: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof posFormSchema>;
@@ -72,12 +73,14 @@ export default function PosCartSidebar() {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(posFormSchema),
+     mode: "all",
     defaultValues: {
       deliveryOption: DeliveryOption.PICKUP,
       name: userData?.data?.name || "",
       phone: userData?.data?.phone || "",
       email: userData?.data?.email || "",
       address: userData?.data?.address || "",
+      doorbell: userData?.data?.doorbell || "",
     },
   });
 
@@ -99,6 +102,7 @@ export default function PosCartSidebar() {
         phone: userData.data.phone || "",
         email: userData.data.email || "",
         address: userData.data.address || "",
+        doorbell: userData.data.doorbell || "",
       });
     }
   }, [userData, form]);
@@ -180,6 +184,7 @@ export default function PosCartSidebar() {
           email: values.email?.trim(),
           phone: values.phone.trim(),
           address: values.address?.trim(),
+          doorbell: values.doorbell || "",
         },
         seller: userData?.data?._id || "",
       };
@@ -196,6 +201,7 @@ export default function PosCartSidebar() {
           phone: "",
           email: "",
           address: "",
+          doorbell: "",
         });
       } else {
         toast.error("Failed to create order");
@@ -347,9 +353,8 @@ export default function PosCartSidebar() {
                           <RadioGroupItem value={DeliveryOption.DELIVERY} disabled={subtotal < 7} />
                         </FormControl>
                         <FormLabel
-                          className={`font-medium ${
-                            subtotal < 7 ? "text-gray-400 cursor-not-allowed" : "cursor-pointer"
-                          }`}
+                          className={`font-medium ${subtotal < 7 ? "text-gray-400 cursor-not-allowed" : "cursor-pointer"
+                            }`}
                         >
                           Delivery
                           {subtotal < 7 && (
@@ -420,6 +425,20 @@ export default function PosCartSidebar() {
               )}
             />
 
+            {/* Door Bell */}
+            <FormField
+              control={form.control}
+              name="doorbell"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Door Bell</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your door bell details" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button
               type="submit"
               disabled={

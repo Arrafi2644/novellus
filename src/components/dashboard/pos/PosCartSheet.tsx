@@ -592,6 +592,7 @@ const posFormSchema = z.object({
   phone: z.string().min(10, "Valid phone number is required"),
   email: z.string().email("Invalid email"),
   address: z.string().min(2, "Address is required"),
+  doorbell: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof posFormSchema>;
@@ -616,6 +617,7 @@ export default function PosCartSheet({ isOpen, onClose }: PosCartSheetProps) {
       phone: userData?.data?.phone || "",
       email: userData?.data?.email || "",
       address: userData?.data?.address || "",
+      doorbell: userData?.data?.doorbell || "",
     },
   });
 
@@ -637,6 +639,7 @@ export default function PosCartSheet({ isOpen, onClose }: PosCartSheetProps) {
         phone: userData.data.phone || "",
         email: userData.data.email || "",
         address: userData.data.address || "",
+        doorbell: userData.data.doorbell || "",
       });
     }
   }, [userData, form]);
@@ -719,6 +722,7 @@ export default function PosCartSheet({ isOpen, onClose }: PosCartSheetProps) {
           email: values.email?.trim(),
           phone: values.phone.trim(),
           address: values.address?.trim(),
+          doorbell: values.doorbell || "",
         },
         seller: userData?.data?._id || "",
       };
@@ -735,6 +739,7 @@ export default function PosCartSheet({ isOpen, onClose }: PosCartSheetProps) {
           phone: "",
           email: "",
           address: "",
+          doorbell: ""
         });
         onClose();
       } else {
@@ -925,11 +930,10 @@ export default function PosCartSheet({ isOpen, onClose }: PosCartSheetProps) {
                               />
                             </FormControl>
                             <FormLabel
-                              className={`font-medium ${
-                                subtotal < 7
+                              className={`font-medium ${subtotal < 7
                                   ? "text-gray-400 cursor-not-allowed"
                                   : "cursor-pointer"
-                              }`}
+                                }`}
                             >
                               Delivery
                               {subtotal < 7 && (
@@ -1012,6 +1016,21 @@ export default function PosCartSheet({ isOpen, onClose }: PosCartSheetProps) {
                           placeholder="Home / Office / Other"
                           className="py-5"
                         />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Door Bell */}
+                <FormField
+                  control={form.control}
+                  name="doorbell"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Door Bell</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your door bell details" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
