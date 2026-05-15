@@ -276,8 +276,19 @@ const OrderManagementPage = () => {
                   </div>
 
                   {item.ingredients?.length > 0 && (
-                    <div className="text-[10px] text-black pl-1 italic leading-none mt-1">
-                      + {item.ingredients.map((ing: any) => ing.name).join(", ")}
+                    <div className="text-[10px] text-black pl-1 flex gap-2 leading-none mt-1">
+                      <span>Ingredients: </span> {item.ingredients.map((ing: any) => ing.name).join(", ")}
+                    </div>
+                  )}
+                
+                  {item.selectedPizzas?.length > 0 && (
+                    <div className="text-[10px] text-black pl-1 flex gap-2 leading-none mt-1">
+                     <span>Selected Pizzas: </span>  {item.selectedPizzas.map((piz: any) => piz).join(", ")}
+                    </div>
+                  )}
+                   {item.pizzaSlices && (
+                    <div className="text-[10px] text-black pl-1 flex justify-between gap-2 leading-none mt-1">
+                      <span>Slice: </span> <span>{item.pizzaSlices}</span>
                     </div>
                   )}
                 </div>
